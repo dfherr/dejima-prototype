@@ -1,0 +1,32 @@
+prefix: false
+services:
+  dejima-peer1:
+    image: "dfherr/dejima-prototype:latest"
+    requires:
+      - "postgres-peer1"
+    hostname: "dejima-peer1"
+    networks: ["dejima-net", "dejima-peer1-net"]
+    env:
+      - "RAILS_ENV=development"
+      - "DEJIMA_PEER_DATABASE_HOST=postgres-peer1.dejima-peer1-net"
+    #detach: true
+    interactive: true
+    tty: true
+  postgres-peer1:
+    image: "postgres:11.1-alpine"
+    networks: ["dejima-peer1-net"]
+    env:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=foobar"
+    run:
+      detach: true
+    exec:
+      tty: true
+      interactive: true
+
+groups:
+  dejima: ["dejima-peer1"]
+
+networks:
+  dejima-net:
+  dejima-peer1-net:

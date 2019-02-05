@@ -1,0 +1,20 @@
+#! /bin/bash
+
+set -e
+
+if [ -d ".git/" ]; then
+  # hook in git pre-commit
+  if [ ! -L .git/hooks/pre-commit ]; then
+    echo "Install Git hook ..."
+    mkdir -p .git/hooks
+    ln -sf ../../misc/admin/git/pre-commit .git/hooks/pre-commit
+  fi
+fi
+
+# Start server
+bundle check || bundle install --path ./.bundle --binstubs .bundle/bin
+
+# create db if it does not exist
+bundle exec rake db:exists || bundle exec rake db:create
+
+bundle exec rails db:migrate && bundle exec puma

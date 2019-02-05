@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV['DEJIMA_PEER_DATABASE_HOST'] || 'localhost' %>
+  port: <%= (ENV['DEJIMA_PEER_DATABASE_PORT'] || 5432).to_i %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: postgres
+  password: foobar
+
+development:
+  <<: *default
+  database: dejima_peer_dev
+
+test:
+  <<: *default
+  database: dejima_peer_test
+
+production:
+  <<: *default
+  database: dejima_peer_prod
+  password: <%= ENV['DEJIMA_PEER_DATABASE_PASSWORD'] %>

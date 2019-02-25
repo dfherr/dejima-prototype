@@ -1,9 +1,17 @@
 module DejimaView
   extend ActiveSupport::Concern
 
+  included do
+    self.dejima_attributes
+  end
+
   class_methods do
-    def view_attribute(*attrs)
-      puts "Define attributes => #{attrs}"
+
+    attr_accessor :dejima_attributes
+
+    def define_attribute(*attrs)
+      self.dejima_attributes=attrs
+      puts "Defined dejima attributes on #{self} => #{attrs}"
     end
   end
 end

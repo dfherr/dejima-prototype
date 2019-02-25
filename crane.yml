@@ -1,12 +1,14 @@
 prefix: "dejima-"
 services:
-  dejima-peer1:
+  peer1:
     image: "dfherr/dejima-prototype:latest"
     requires:
       - "postgres-peer1"
     networks: ["net", "peer1-net"]
     env:
       - "RAILS_ENV=development"
+      - "PEER_TYPE=government"
+      - "PEER_NETWORK_ADDRESS=dejima-peer1.dejima-net"
       - "DEJIMA_PEER_DATABASE_HOST=dejima-postgres-peer1.dejima-peer1-net"
     #detach: true
     interactive: true
@@ -23,17 +25,20 @@ services:
     exec:
       tty: true
       interactive: true
-  dejima-peer2:
+  peer2:
     image: "dfherr/dejima-prototype:latest"
     requires:
       - "postgres-peer2"
     networks: ["net", "peer2-net"]
     env:
       - "RAILS_ENV=development"
+      - "PEER_TYPE=bank"
+      - "PEER_NETWORK_ADDRESS=dejima-peer2.dejima-net"
       - "DEJIMA_PEER_DATABASE_HOST=dejima-postgres-peer2.dejima-peer2-net"
-    detach: true
+    #detach: true
     interactive: true
     tty: true
+    volume: ["peer:/peer"]
   postgres-peer2:
     image: "postgres:11.1-alpine"
     networks: ["peer2-net"]
@@ -45,11 +50,37 @@ services:
     exec:
       tty: true
       interactive: true
+  peer3:
+    image: "dfherr/dejima-prototype:latest"
+    requires:
+      - "postgres-peer3"
+    networks: ["net", "peer3-net"]
+    env:
+      - "RAILS_ENV=development"
+      - "PEER_TYPE=insurance"
+      - "PEER_NETWORK_ADDRESS=dejima-peer3.dejima-net"
+      - "DEJIMA_PEER_DATABASE_HOST=dejima-postgres-peer3.dejima-peer3-net"
+    #detach: true
+    interactive: true
+    tty: true
+    volume: ["peer:/peer"]
+  postgres-peer3:
+    image: "postgres:11.1-alpine"
+    networks: ["peer3-net"]
+    env:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=foobar"
+    run:
+      detach: true
+    exec:
+      tty: true
+      interactive: true
 
 groups:
-  dejima: ["dejima-peer1", "dejima-peer2"]
+  dejima: ["peer1", "peer2", "peer3"]
 
 networks:
   net:
   peer1-net:
   peer2-net:
+  peer3-net:

@@ -1,3 +1,5 @@
+require 'set'
+
 class BankUser < ApplicationRecord
   include DejimaBase
 
@@ -6,5 +8,5 @@ class BankUser < ApplicationRecord
   #               :iban,
   #               :phone
 
-  mount_views ShareWithBank
+  link_dejima_views [{ view: ShareWithBank, peers: [Rails.application.config.peer_network_address, "dejima-peer1.dejima-net"].to_set }]
 end

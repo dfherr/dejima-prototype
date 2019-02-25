@@ -1,3 +1,5 @@
+require 'set'
+
 class InsuranceUser < ApplicationRecord
   include DejimaBase
 
@@ -7,5 +9,5 @@ class InsuranceUser < ApplicationRecord
 #                 :address,
 #                 :phone
 
-  mount_view ShareWithInsurance
+  link_dejima_views [{ view: ShareWithInsurance, peers: [Rails.application.config.peer_network_address, "dejima-peer1.dejima-net"].to_set }]
 end

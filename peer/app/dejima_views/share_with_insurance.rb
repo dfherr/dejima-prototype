@@ -1,8 +1,8 @@
 class ShareWithInsurance
   include DejimaView
 
-  view_attribute  :first_name,
-                  :last_name,
-                  :address,
-                  :birthdate
+  define_attribute  :first_name,
+                    :last_name,
+                    :address,
+                    :birthdate
 end

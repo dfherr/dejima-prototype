@@ -1,13 +1,13 @@
 class CreateInsuranceUsers < ActiveRecord::Migration[5.2]
   def change
-    return unless Rails.configuration.peer_type == :insurance
+    return unless Rails.application.config.dejima_peer_type == :insurance
 
     create_table :insurance_users do |t|
-      t.string :first_name, null: false
-      t.string :last_name, null: false
-      t.string :insurance_number
-      t.string :address
-      t.string :phone
+      t.string :first_name, null: false # shared with gov
+      t.string :last_name, null: false # shared with gov
+      t.string :insurance_number # not shared
+      t.string :address # shared with gov
+      t.string :phone # shared with gov
       
       t.timestamps
     end

@@ -28,6 +28,7 @@ RUN apk add --update --no-cache \
      tzdata \
      less \
      bash \
+     curl \
   && rm -rf /var/cache/apk/*
 
 ENV TZ Europe/Berlin

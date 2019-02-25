@@ -9,4 +9,4 @@ namespace :db do
         exit 0
       end
     end
-  end
+end

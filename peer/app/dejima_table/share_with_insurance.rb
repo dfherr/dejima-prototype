@@ -1,5 +1,5 @@
 class ShareWithInsurance
-  include DejimaView
+  include DejimaTable
 
   define_attribute  :first_name,
                     :last_name,

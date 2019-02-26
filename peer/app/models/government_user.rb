@@ -9,6 +9,6 @@ class GovernmentUser < ApplicationRecord
   #               :address,
   #               :birthdate
 
-  link_dejima_views [{ view: ShareWithInsurance, peers: [Rails.application.config.peer_network_address, "dejima-peer3.dejima-net"].to_set },
-                    { view: ShareWithBank, peers: [Rails.application.config.peer_network_address, "dejima-peer2.dejima-net"].to_set }]
+  link_dejima_tables [{ table: ShareWithInsurance, peers: [Rails.application.config.peer_network_address, "dejima-peer3.dejima-net"].to_set },
+                    { table: ShareWithBank, peers: [Rails.application.config.peer_network_address, "dejima-peer2.dejima-net"].to_set }]
 end

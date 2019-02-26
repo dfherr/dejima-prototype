@@ -8,5 +8,5 @@ class BankUser < ApplicationRecord
   #               :iban,
   #               :phone
 
-  link_dejima_views [{ view: ShareWithBank, peers: [Rails.application.config.peer_network_address, "dejima-peer1.dejima-net"].to_set }]
+  link_dejima_tables [{ table: ShareWithBank, peers: [Rails.application.config.peer_network_address, "dejima-peer1.dejima-net"].to_set }]
 end

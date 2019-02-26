@@ -3,20 +3,20 @@ require 'rest-client'
 
 module DejimaClient
 
-    @visited = Set[Rails.application.config.peer_network_address]
-
     def self.send_peer_group_request(peers, payload)
+        responses = {}
         peers.each do |peer|
-            next if @visited.include? peer
             begin
                 response = RestClient.post("#{peer}:3000/dejima/detect", payload)
-                puts "Response: #{response}"
+                puts "Peer #{peer} responsed: #{response}"
+                responses[peer] = JSON.parse response.body
             rescue RestClient::ExceptionWithResponse => e
                 puts "RestClient Error response: #{e.response}"
             rescue SocketError => e
                 puts "Couldn't open socket to peer #{peer}: #{e}"
             end
         end
+        responses
     end
 end
 

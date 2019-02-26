@@ -1,4 +1,4 @@
-module DejimaView
+module DejimaTable
   extend ActiveSupport::Concern
 
   included do

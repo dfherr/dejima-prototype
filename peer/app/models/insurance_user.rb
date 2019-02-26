@@ -9,5 +9,5 @@ class InsuranceUser < ApplicationRecord
 #                 :address,
 #                 :phone
 
-  link_dejima_views [{ view: ShareWithInsurance, peers: [Rails.application.config.peer_network_address, "dejima-peer1.dejima-net"].to_set }]
+  link_dejima_tables [{ table: ShareWithInsurance, peers: [Rails.application.config.peer_network_address, "dejima-peer1.dejima-net"].to_set }]
 end

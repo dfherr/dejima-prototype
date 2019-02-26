@@ -1,13 +1,9 @@
 class ShareWithBank
-  include DejimaView
+  include DejimaTable
   
   define_attribute  :first_name,
                     :last_name,
                     :phone,
                     :address
-
-  def self.compare(view)
-    
-  end
 
 end

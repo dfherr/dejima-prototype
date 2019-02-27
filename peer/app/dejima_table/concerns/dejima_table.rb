@@ -11,7 +11,7 @@ module DejimaTable
 
     def define_attribute(*attrs)
       self.dejima_attributes=attrs
-      puts "Defined dejima attributes on #{self} => #{attrs}"
+      Rails.logger.info "Defined dejima attributes on #{self} => #{attrs}"
     end
   end
 end

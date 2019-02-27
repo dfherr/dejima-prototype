@@ -8,13 +8,12 @@ module DejimaClient
         peers.each do |peer|
             begin
                 response = RestClient.post("#{peer}:3000/dejima/detect", payload)
-                puts "Peer #{peer} responsed: #{response}"
-                binding.pry
+                Rails.logger.info "Peer #{peer} responded: #{response}"
                 responses[peer] = JSON.parse response.body
             rescue RestClient::ExceptionWithResponse => e
-                puts "RestClient Error response: #{e.response}"
+                Rails.logger.warn "RestClient Error response: #{e.response}"
             rescue SocketError => e
-                puts "Couldn't open socket to peer #{peer}: #{e}"
+                Rails.logger.warn "Couldn't open socket to peer #{peer}: #{e}"
             end
         end
         responses

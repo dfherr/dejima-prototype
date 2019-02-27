@@ -1,7 +1,7 @@
 Rails.application.config.after_initialize do
 
     unless Rake.respond_to? :application
-        puts "Running as dejima peer type: #{Rails.application.config.dejima_peer_type}"
+        Rails.logger.info "Running as dejima peer type: #{Rails.application.config.dejima_peer_type}"
 
         if Rails.application.config.dejima_peer_type == :government
             DejimaUtils.create_peer_groups(GovernmentUser)

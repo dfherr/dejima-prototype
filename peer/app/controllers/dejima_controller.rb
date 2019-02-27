@@ -30,9 +30,10 @@ class DejimaController < ApplicationController
         end
       end
       if respond.empty?
-        puts "Everything ok!"
-        render json: "ok"
+        Rails.logger.info "Detected no required updates to request. Ok!"
+        render json: JSON.generate("ok")
       else
+        Rails.logger.info "Detected necessary updates:\n #{JSON.pretty_generate(respond)}"
         render json: JSON.generate(respond)
       end
     end

@@ -5,9 +5,10 @@ class InsuranceUser < ApplicationRecord
 
 #   attr_accessor :first_name,
 #                 :last_name,
-#                 :insurance_number,
 #                 :address,
-#                 :phone
+#                 :birthdate,
+#                 :insurance_number
+
 
   link_dejima_tables [{ table: ShareWithInsurance, peers: [Rails.application.config.peer_network_address, "dejima-peer1.dejima-net"].to_set }]
 end

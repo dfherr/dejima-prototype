@@ -10,7 +10,7 @@ module DejimaBase
 
     def link_dejima_tables(views)
       self.dejima_tables = views
-      puts "Linked dejima views on #{self} => #{views}"
+      Rails.logger.info "Linked dejima views on #{self} => #{views}"
     end
   end
 end

@@ -3,7 +3,7 @@ module DejimaUtils
     def self.create_peer_groups(*models)
         # when creating we begin with all locally known peer groups
         peer_groups = self.check_local_peer_groups(models)
-        puts "Peers groups: #{peer_groups}"
+        Rails.logger.info "Peers groups: #{peer_groups}"
         self.detect_peer_groups(peer_groups)
     end
 
@@ -29,9 +29,8 @@ module DejimaUtils
                 next if response == "ok"
                 # response contains all the entries that signal peer_group_updates
                 response.each do |peer_group_update|
-
+                    # TODO:
                 end
-                
             end
             binding.pry
             # TODO:

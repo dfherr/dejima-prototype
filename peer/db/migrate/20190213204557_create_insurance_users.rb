@@ -7,7 +7,7 @@ class CreateInsuranceUsers < ActiveRecord::Migration[5.2]
       t.string :last_name, null: false # shared with gov
       t.string :insurance_number # not shared
       t.string :address # shared with gov
-      t.string :phone # shared with gov
+      t.date :birthdate # shared with gov
       
       t.timestamps
     end

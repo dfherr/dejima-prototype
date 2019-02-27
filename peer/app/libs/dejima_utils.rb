@@ -13,11 +13,26 @@ module DejimaUtils
         peer_groups.each do |dejima_tables, values|
             # create arrays from sets for json serialization
             payload = {}
-            peers_visited = Set.new([Rails.application.config.peer_network_address])
             payload[:dejima_tables] = dejima_tables.to_a
             payload[:attributes] = values[:attributes].to_a
-            payload[:peers] = values[:peers].subtract(peers_visited).to_a
-            responses = DejimaClient.send_peer_group_request(payload[:peers], payload)
+            payload[:peers] = values[:peers].to_a
+            visit_next = values[:peers].subtract(values[:visited]).to_a
+            responses = DejimaClient.send_peer_group_request(visit_next, payload)
+            # responses example
+            # {"dejima-peer1.dejima-net"=>
+            #    [{"dejima_tables"=>["ShareWithInsurance", "ShareWithBank"], "attributes"=>["first_name", "last_name", "address"], "peers"=>["dejima-peer3.dejima-net", "dejima-peer2.dejima-net"]},
+            #     {"dejima_tables"=>["ShareWithInsurance"], "attributes"=>["birthdate"], "peers"=>["dejima-peer3.dejima-net"]},
+            #     {"dejima_tables"=>["ShareWithBank"], "attributes"=>["phone"], "peers"=>["dejima-peer2.dejima-net"]}]}
+              
+            responses.each do |peer, response|
+                peer_groups[dejima_tables][:visited] << peer
+                next if response == "ok"
+                # response contains all the entries that signal peer_group_updates
+                response.each do |peer_group_update|
+
+                end
+                
+            end
             binding.pry
             # TODO:
             # break loop and restart detection if peer_groups keys (the combination of dejima groups) changed
@@ -25,9 +40,9 @@ module DejimaUtils
         end
         # TODO:
         # if break
-        self.detect_peer_groups(peer_groups)
+        #self.detect_peer_groups(peer_groups)
         # else broadcast new peer groups
-        self.broadcast_peer_groups
+        #self.broadcast_peer_groups
     end
 
     # used to broadcast updated peer_groups to the whole network
@@ -41,7 +56,7 @@ module DejimaUtils
         attribute_to_tables = {}
         tables_to_peers = {}
         models.each do |model|
-            # model.dejima_table structure:
+            # model.dejima_table example:
             # [{:table=>ShareWithInsurance, :peers=>#<Set: {"dejima-peer1.dejima-net", "dejima-peer3.dejima-net"}>}, 
             # {:table=>ShareWithBank, :peers=>#<Set: {"dejima-peer1.dejima-net", "dejima-peer2.dejima-net"}>}]
             model.dejima_tables.each do |dejima_table|
@@ -54,7 +69,7 @@ module DejimaUtils
             end  
         end
 
-        # attribute_to_tables_map structure:
+        # attribute_to_tables_map example:
         # { 
         #   first_name: [ShareWithInsurance, ShareWithBank],
         #   last_name: [ShareWithInsurance, ShareWithBank],
@@ -69,6 +84,7 @@ module DejimaUtils
             tables.each do |table|
                 peer_groups[tables][:peers] = peer_groups[tables][:peers].union tables_to_peers[table]
             end
+            peer_groups[tables][:visited] = Set.new([Rails.application.config.peer_network_address])
         end
         peer_groups
     end

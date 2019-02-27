@@ -9,6 +9,7 @@ module DejimaClient
             begin
                 response = RestClient.post("#{peer}:3000/dejima/detect", payload)
                 puts "Peer #{peer} responsed: #{response}"
+                binding.pry
                 responses[peer] = JSON.parse response.body
             rescue RestClient::ExceptionWithResponse => e
                 puts "RestClient Error response: #{e.response}"

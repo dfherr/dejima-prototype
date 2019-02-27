@@ -11,7 +11,7 @@ class DejimaController < ApplicationController
     # multiple peers initilizing at the same time
 
     @mutex.synchronize do
-      puts "Magic happening"
+      Rails.logger.info "Responding to detection request"
       dejima_tables = Set.new(params["dejima_tables"])
       peers = Set.new(params["peers"])
       bases = DejimaUtils.identify_bases(dejima_tables)
@@ -19,6 +19,8 @@ class DejimaController < ApplicationController
       respond = [] # response is used by rails :)  
       local_peer_groups.each do |tables, values|
         # respond if we found tables that are a proper superset (not euqal) or if we know peers not yet known
+        # in the first case the requesting peer needs to be informed about another dejima group needing this data
+        # in the second case there exist more peers needing the data than the requester knew about
         if tables.proper_superset?(dejima_tables) || !values[:peers].subtract(peers).empty?
           payload = {}
           payload[:dejima_tables] = tables.to_a
@@ -27,11 +29,11 @@ class DejimaController < ApplicationController
           respond << payload
         end
       end
-      binding.pry
       if respond.empty?
+        puts "Everything ok!"
         render json: "ok"
       else
-        render json: respond
+        render json: JSON.generate(respond)
       end
     end
   end

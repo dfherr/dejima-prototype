@@ -32,7 +32,6 @@ module DejimaUtils
                     # TODO:
                 end
             end
-            binding.pry
             # TODO:
             # break loop and restart detection if peer_groups keys (the combination of dejima groups) changed
             # otherwise traverse previously unknown peers
@@ -48,7 +47,6 @@ module DejimaUtils
     def self.broadcast_peer_groups(peer_groups)
         # TODO:
         # broadcast...
-
     end
 
     def self.check_local_peer_groups(models)

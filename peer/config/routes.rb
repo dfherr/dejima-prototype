@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   scope :dejima do
     post 'detect', to: 'dejima#detect', controller: "dejima"
+    post 'propagate', to: 'dejima#propagate', controller: "dejima"
   end
   
 end

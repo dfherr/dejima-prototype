@@ -44,4 +44,8 @@ class DejimaController < ApplicationController
 
   end
 
+  def propagate
+    Rails.logger.info "Propagate:\n #{params}"
+  end
+
 end

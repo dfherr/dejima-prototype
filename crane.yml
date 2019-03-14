@@ -15,11 +15,12 @@ services:
     tty: true
     volume: ["peer:/peer"]
   postgres-peer1:
-    image: "postgres:11.1-alpine"
+    image: "dfherr/dejima-postgres:latest"
     networks: ["peer1-net"]
     env:
       - "POSTGRES_USER=postgres"
       - "POSTGRES_PASSWORD=foobar"
+      - "DEJIMA_API_ENDPOINT=dejima-peer1.dejima-peer1-net:3000/dejima/propagate"
     run:
       detach: true
     exec:
@@ -40,11 +41,12 @@ services:
     tty: true
     volume: ["peer:/peer"]
   postgres-peer2:
-    image: "postgres:11.1-alpine"
+    image: "dfherr/dejima-postgres:latest"
     networks: ["peer2-net"]
     env:
       - "POSTGRES_USER=postgres"
       - "POSTGRES_PASSWORD=foobar"
+      - "DEJIMA_API_ENDPOINT=dejima-peer2.dejima-peer2-net:3000/dejima/propagate"
     run:
       detach: true
     exec:
@@ -65,11 +67,12 @@ services:
     tty: true
     volume: ["peer:/peer"]
   postgres-peer3:
-    image: "postgres:11.1-alpine"
+    image: "dfherr/dejima-postgres:latest"
     networks: ["peer3-net"]
     env:
       - "POSTGRES_USER=postgres"
       - "POSTGRES_PASSWORD=foobar"
+      - "DEJIMA_API_ENDPOINT=dejima-peer3.dejima-peer3-net:3000/dejima/propagate"
     run:
       detach: true
     exec:

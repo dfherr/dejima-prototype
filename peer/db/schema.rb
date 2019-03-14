@@ -14,15 +14,14 @@ ActiveRecord::Schema.define(version: 2019_03_14_133703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "plsh"
 
-  create_table "bank_users", force: :cascade do |t|
+  create_table "government_users", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
-    t.string "iban"
-    t.string "address"
     t.string "phone"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "address"
+    t.date "birthdate"
   end
 
 end

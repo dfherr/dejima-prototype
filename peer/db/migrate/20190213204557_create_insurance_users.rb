@@ -8,8 +8,6 @@ class CreateInsuranceUsers < ActiveRecord::Migration[5.2]
       t.string :insurance_number # not shared
       t.string :address # shared with gov
       t.date :birthdate # shared with gov
-      
-      t.timestamps
     end
   end
 end

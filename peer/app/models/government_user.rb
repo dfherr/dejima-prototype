@@ -2,13 +2,12 @@ require 'set'
 
 class GovernmentUser < ApplicationRecord
   include DejimaBase
+  # table columns
+  # id, first_name, last_name, phone, address, birthdate
 
-  # attr_accessor :first_name,
-  #               :last_name,
-  #               :phone,
-  #               :address,
-  #               :birthdate
-
-  link_dejima_tables [{ table: ShareWithInsurance, peers: [Rails.application.config.peer_network_address, "dejima-peer3.dejima-net"].to_set },
-                    { table: ShareWithBank, peers: [Rails.application.config.peer_network_address, "dejima-peer2.dejima-net"].to_set }]
+  # only peers link to other peers. client only manage local
+  if Rails.application.config.prototype_role == :peer
+    link_dejima_tables [{ table: ShareWithInsurance, peers: [Rails.application.config.peer_network_address, "dejima-peer3.dejima-net"].to_set },
+                       { table: ShareWithBank, peers: [Rails.application.config.peer_network_address, "dejima-peer2.dejima-net"].to_set }]
+  end
 end

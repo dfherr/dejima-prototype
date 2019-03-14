@@ -8,8 +8,6 @@ class CreateGovernmentUsers < ActiveRecord::Migration[5.2]
       t.string :phone # shared with bank, but not insurance
       t.string :address # shared with bank and insurance
       t.date :birthdate # shared insurance, but not bank
-
-      t.timestamps
     end
   end
 end

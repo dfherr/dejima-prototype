@@ -17,7 +17,7 @@ module DejimaUtils
             payload[:attributes] = values[:attributes].to_a
             payload[:peers] = values[:peers].to_a
             visit_next = values[:peers].subtract(values[:visited]).to_a
-            responses = DejimaClient.send_peer_group_request(visit_next, payload)
+            responses = DejimaProxy.send_peer_group_request(visit_next, payload)
             # responses example
             # {"dejima-peer1.dejima-net"=>
             #    [{"dejima_tables"=>["ShareWithInsurance", "ShareWithBank"], "attributes"=>["first_name", "last_name", "address"], "peers"=>["dejima-peer3.dejima-net", "dejima-peer2.dejima-net"]},

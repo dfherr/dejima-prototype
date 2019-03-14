@@ -13,4 +13,6 @@ RUN git clone https://github.com/petere/plsh \
   && cd plsh && git checkout 9b108516a005a0592d9c9e145189825f92f820e1 \
   && make && make install
 
+ADD add_dejima_user.sh /docker-entrypoint-initdb.d/add_dejima_user.sh
+
 CMD ["postgres"]

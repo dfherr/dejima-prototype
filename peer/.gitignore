@@ -24,4 +24,5 @@
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.
-/config/master.key
+# this is a open-source prototype, so we share the key :)
+# /config/master.key

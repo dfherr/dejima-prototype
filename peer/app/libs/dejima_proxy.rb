@@ -21,7 +21,7 @@ module DejimaProxy
     end
 
     def self.send_update_dejima_table(payload)
-        peers = ["dejima-peer1.dejima-net"]
+        peers = ["dejima-gov-peer.dejima-net"]
         Rails.logger.info("Sending updates for remote dejima tables.\n Peers: #{peers}\n Payload: #{payload}")
         responses = {}
         peers.each do |peer|

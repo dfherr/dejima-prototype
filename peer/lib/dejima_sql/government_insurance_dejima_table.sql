@@ -1,3 +1,4 @@
+-- Copyright Van Dang https://github.com/dangtv/BIRDS
 CREATE OR REPLACE VIEW public.dejima_insurance AS 
 SELECT __dummy__.COL0 AS FIRST_NAME,__dummy__.COL1 AS LAST_NAME,__dummy__.COL2 AS ADDRESS,__dummy__.COL3 AS BIRTHDATE 
 FROM (SELECT DISTINCT dejima_insurance_a4_0.COL0 AS COL0, dejima_insurance_a4_0.COL1 AS COL1, dejima_insurance_a4_0.COL2 AS COL2, dejima_insurance_a4_0.COL3 AS COL3 
@@ -13,13 +14,10 @@ CREATE EXTENSION IF NOT EXISTS plsh;
 
 CREATE OR REPLACE FUNCTION public.dejima_insurance_run_shell(text) RETURNS text AS $$
 #!/bin/sh
-#echo "---"
-#sleep 
-#curl -X POST -H "Content-Type: application/json" $DEJIMA_API_ENDPOINT -d '{"dejima_table": "insurance"}' > /dev/null 2>&1
+curl -X POST -H "Content-Type: application/json" $DEJIMA_API_ENDPOINT -d '$1' > /dev/null 2>&1
 #echo "changes: '$1'"
 #echo $?
 echo "true"
-#exit 0
 $$ LANGUAGE plsh;
 CREATE OR REPLACE FUNCTION public.dejima_insurance_detect_update()
 RETURNS trigger
@@ -36,6 +34,7 @@ AS $$
   insertion_data text;
   json_data text;
   result text;
+  user_name text;
   BEGIN
   IF NOT EXISTS (SELECT * FROM information_schema.tables WHERE table_name = 'dejima_insurance_delta_action_flag') THEN
     insertion_data := (SELECT (array_to_json(array_agg(t)))::text FROM (SELECT * FROM public.dejima_insurance EXCEPT SELECT * FROM public.__dummy__materialized_dejima_insurance) as t);
@@ -47,20 +46,25 @@ AS $$
         deletion_data := '[]';
     END IF; 
     IF (insertion_data IS DISTINCT FROM '[]') OR (insertion_data IS DISTINCT FROM '[]') THEN 
-        json_data := concat('{"view": ' , '"public.dejima_insurance"', ', ' , '"insertion": ' , insertion_data , ', ' , '"deletion": ' , deletion_data , '}');
-        result := public.dejima_insurance_run_shell(json_data);
-        IF result = 'true' THEN 
-            REFRESH MATERIALIZED VIEW public.__dummy__materialized_dejima_insurance;
-            FOR func IN (select distinct trigger_schema||'.non_trigger_'||substring(action_statement, 19) as function 
+        IF NOT (user_name = 'dejima') THEN 
+            json_data := concat('{"view": ' , '"public.dejima_insurance"', ', ' , '"insertion": ' , insertion_data , ', ' , '"deletion": ' , deletion_data , '}');
+            result := public.dejima_insurance_run_shell(json_data);
+            IF result = 'true' THEN 
+                REFRESH MATERIALIZED VIEW public.__dummy__materialized_dejima_insurance;
+                FOR func IN (select distinct trigger_schema||'.non_trigger_'||substring(action_statement, 19) as function 
                 from information_schema.triggers where trigger_schema = 'public' and event_object_table='dejima_insurance'
                 and action_timing='AFTER' and (event_manipulation='INSERT' or event_manipulation='DELETE' or event_manipulation='UPDATE')
                 and action_statement like 'EXECUTE PROCEDURE %') 
-            LOOP
-                EXECUTE 'SELECT ' || func into tv;
-            END LOOP;
-        ELSE
-            RAISE NOTICE 'result from running the sh script: %', result;
-            RAISE check_violation USING MESSAGE = 'update on view is rejected by the external tool. received result: ' || result;
+                LOOP
+                    EXECUTE 'SELECT ' || func into tv;
+                END LOOP;
+            ELSE
+                -- RAISE NOTICE 'result from running the sh script: %', result;
+                RAISE check_violation USING MESSAGE = 'update on view is rejected by the external tool, result from running the sh script: ' 
+                || result;
+            END IF;
+        ELSE 
+            RAISE LOG 'send request to dejima proxy after serving the user %', user_name;
         END IF;
     END IF;
   END IF;
@@ -92,6 +96,7 @@ AS $$
   insertion_data text;
   json_data text;
   result text;
+  user_name text;
   BEGIN
   IF NOT EXISTS (SELECT * FROM information_schema.tables WHERE table_name = 'dejima_insurance_delta_action_flag') THEN
     insertion_data := (SELECT (array_to_json(array_agg(t)))::text FROM (SELECT * FROM public.dejima_insurance EXCEPT SELECT * FROM public.__dummy__materialized_dejima_insurance) as t);
@@ -103,20 +108,25 @@ AS $$
         deletion_data := '[]';
     END IF; 
     IF (insertion_data IS DISTINCT FROM '[]') OR (insertion_data IS DISTINCT FROM '[]') THEN 
-        json_data := concat('{"view": ' , '"public.dejima_insurance"', ', ' , '"insertion": ' , insertion_data , ', ' , '"deletion": ' , deletion_data , '}');
-        result := public.dejima_insurance_run_shell(json_data);
-        IF result = 'true' THEN 
-            REFRESH MATERIALIZED VIEW public.__dummy__materialized_dejima_insurance;
-            FOR func IN (select distinct trigger_schema||'.non_trigger_'||substring(action_statement, 19) as function 
+        IF NOT (user_name = 'dejima') THEN 
+            json_data := concat('{"view": ' , '"public.dejima_insurance"', ', ' , '"insertion": ' , insertion_data , ', ' , '"deletion": ' , deletion_data , '}');
+            result := public.dejima_insurance_run_shell(json_data);
+            IF result = 'true' THEN 
+                REFRESH MATERIALIZED VIEW public.__dummy__materialized_dejima_insurance;
+                FOR func IN (select distinct trigger_schema||'.non_trigger_'||substring(action_statement, 19) as function 
                 from information_schema.triggers where trigger_schema = 'public' and event_object_table='dejima_insurance'
                 and action_timing='AFTER' and (event_manipulation='INSERT' or event_manipulation='DELETE' or event_manipulation='UPDATE')
                 and action_statement like 'EXECUTE PROCEDURE %') 
-            LOOP
-                EXECUTE 'SELECT ' || func into tv;
-            END LOOP;
-        ELSE
-            RAISE NOTICE 'result from running the sh script: %', result;
-            RAISE check_violation USING MESSAGE = 'update on view is rejected by the external tool. received result: ' || result;
+                LOOP
+                    EXECUTE 'SELECT ' || func into tv;
+                END LOOP;
+            ELSE
+                -- RAISE NOTICE 'result from running the sh script: %', result;
+                RAISE check_violation USING MESSAGE = 'update on view is rejected by the external tool, result from running the sh script: ' 
+                || result;
+            END IF;
+        ELSE 
+            RAISE LOG 'send request to dejima proxy after serving the user %', user_name;
         END IF;
     END IF;
   END IF;
@@ -151,6 +161,7 @@ AS $$
   insertion_data text;
   json_data text;
   result text;
+  user_name text;
   temprecΔ_del_government_users public.government_users%ROWTYPE;
 temprecΔ_ins_government_users public.government_users%ROWTYPE;
   BEGIN
@@ -213,13 +224,19 @@ DROP TABLE Δ_ins_government_users;
             deletion_data := '[]';
         END IF; 
         IF (insertion_data IS DISTINCT FROM '[]') OR (insertion_data IS DISTINCT FROM '[]') THEN 
-            json_data := concat('{"view": ' , '"public.dejima_insurance"', ', ' , '"insertion": ' , insertion_data , ', ' , '"deletion": ' , deletion_data , '}');
-            result := public.dejima_insurance_run_shell(json_data);
-            IF result = 'true' THEN 
-                REFRESH MATERIALIZED VIEW public.__dummy__materialized_dejima_insurance;
-            ELSE
-                RAISE NOTICE 'result from running the sh script: %', result;
-                RAISE check_violation USING MESSAGE = 'update on view is rejected by the external tool. received result: ' || result;
+            user_name := (SELECT current_user);
+            IF NOT (user_name = 'dejima') THEN 
+                json_data := concat('{"view": ' , '"public.dejima_insurance"', ', ' , '"insertion": ' , insertion_data , ', ' , '"deletion": ' , deletion_data , '}');
+                result := public.dejima_insurance_run_shell(json_data);
+                IF result = 'true' THEN 
+                    REFRESH MATERIALIZED VIEW public.__dummy__materialized_dejima_insurance;
+                ELSE
+                    -- RAISE NOTICE 'result from running the sh script: %', result;
+                    RAISE check_violation USING MESSAGE = 'update on view is rejected by the external tool, result from running the sh script: ' 
+                    || result;
+                END IF;
+            ELSE 
+                RAISE LOG 'send request to dejima proxy after serving the user %', user_name;
             END IF;
         END IF;
     END IF;

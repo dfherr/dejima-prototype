@@ -61,7 +61,6 @@ class DejimaController < ApplicationController
   def update_dejima_table
     Rails.logger.info "Update dejima table:\n #{params}"
     ActiveRecord::Base.connection.execute("INSERT INTO dejima_bank (first_name, last_name) VALUES ('John', 'Doe');")
-    Rails.logger.info "unlocking update"
     render text: "true"
   end
 
@@ -69,7 +68,9 @@ class DejimaController < ApplicationController
   def create_user
     first_name = params["first_name"] || "John"
     last_name = params["last_name"] || "Doe"
+    puts ActiveRecord::Base.connection.execute("SELECT current_user").values
     BankUser.create(first_name: first_name, last_name: last_name)
+    puts ActiveRecord::Base.connection.execute("SELECT current_user").values
   end
 
 end

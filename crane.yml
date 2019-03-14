@@ -1,92 +1,118 @@
 prefix: "dejima-"
 services:
-  client1:
+  gov-client:
     image: "dfherr/dejima-prototype:latest"
     requires:
-      - "postgres1"
-    networks: ["net", "client1-net"]
+      - "gov-postgres"
+    networks: ["net", "gov-client-net"]
     env:
       - "RAILS_ENV=client_development"
       - "PEER_TYPE=government"
-      - "DEJIMA_PEER_DATABASE_HOST=dejima-postgres1.dejima-peer1-net"
+      - "DEJIMA_PEER_DATABASE_HOST=dejima-gov-postgres.dejima-gov-client-net"
     #detach: true
     interactive: true
     tty: true
     volume: ["peer:/peer"]
-  peer1:
+  gov-peer:
     image: "dfherr/dejima-prototype:latest"
     requires:
-      - "postgres1"
-    networks: ["net", "peer1-net"]
+      - "gov-postgres"
+    networks: ["net", "gov-peer-net"]
     env:
       - "RAILS_ENV=peer_development"
       - "PEER_TYPE=government"
-      - "PEER_NETWORK_ADDRESS=dejima-peer1.dejima-net"
-      - "DEJIMA_PEER_DATABASE_HOST=dejima-postgres1.dejima-peer1-net"
+      - "PEER_NETWORK_ADDRESS=dejima-gov-peer.dejima-net"
+      - "DEJIMA_PEER_DATABASE_HOST=dejima-gov-postgres.dejima-gov-peer-net"
     #detach: true
     interactive: true
     tty: true
     volume: ["peer:/peer"]
-  postgres1:
+  gov-postgres:
     image: "dfherr/dejima-postgres:latest"
-    networks: ["peer1-net", "client1-net"]
+    networks: ["gov-peer-net", "gov-client-net"]
     env:
       - "POSTGRES_USER=postgres"
       - "POSTGRES_PASSWORD=foobar"
-      - "DEJIMA_API_ENDPOINT=dejima-peer1.dejima-peer1-net:3000/dejima/propagate"
+      - "DEJIMA_API_ENDPOINT=dejima-gov-peer.dejima-gov-peer-net:3000/dejima/propagate"
     run:
       #detach: true
     exec:
       tty: true
       interactive: true
-  peer2:
+  bank-client:
     image: "dfherr/dejima-prototype:latest"
     requires:
-      - "postgres2"
-    networks: ["net", "peer2-net"]
+      - "bank-postgres"
+    networks: ["net", "bank-client-net"]
     env:
-      - "RAILS_ENV=peer_development"
+      - "RAILS_ENV=client_development"
       - "PEER_TYPE=bank"
-      - "PEER_NETWORK_ADDRESS=dejima-peer2.dejima-net"
-      - "DEJIMA_PEER_DATABASE_HOST=dejima-postgres2.dejima-peer2-net"
+      - "DEJIMA_PEER_DATABASE_HOST=dejima-bank-postgres.dejima-bank-client-net"
     #detach: true
     interactive: true
     tty: true
     publish: ["3000:3000"]
     volume: ["peer:/peer"]
-  postgres2:
+  bank-peer:
+    image: "dfherr/dejima-prototype:latest"
+    requires:
+      - "bank-postgres"
+    networks: ["net", "bank-peer-net"]
+    env:
+      - "RAILS_ENV=peer_development"
+      - "PEER_TYPE=bank"
+      - "PEER_NETWORK_ADDRESS=dejima-bank-peer.dejima-net"
+      - "DEJIMA_PEER_DATABASE_HOST=dejima-bank-postgres.dejima-bank-peer-net"
+    #detach: true
+    interactive: true
+    tty: true
+    volume: ["peer:/peer"]
+  bank-postgres:
     image: "dfherr/dejima-postgres:latest"
-    networks: ["peer2-net"]
+    networks: ["bank-peer-net", "bank-client-net"]
     env:
       - "POSTGRES_USER=postgres"
       - "POSTGRES_PASSWORD=foobar"
-      - "DEJIMA_API_ENDPOINT=dejima-peer2.dejima-peer2-net:3000/dejima/propagate"
+      - "DEJIMA_API_ENDPOINT=dejima-bank-peer.dejima-bank-peer-net:3000/dejima/propagate"
     run:
       detach: true
     exec:
       tty: true
       interactive: true
-  peer3:
+  insurance-client:
     image: "dfherr/dejima-prototype:latest"
     requires:
-      - "postgres3"
-    networks: ["net", "peer3-net"]
+      - "insurance-postgres"
+    networks: ["net", "insurance-client-net"]
     env:
-      - "RAILS_ENV=peer_development"
+      - "RAILS_ENV=client_development"
       - "PEER_TYPE=insurance"
-      - "PEER_NETWORK_ADDRESS=dejima-peer3.dejima-net"
-      - "DEJIMA_PEER_DATABASE_HOST=dejima-postgres3.dejima-peer3-net"
+      - "DEJIMA_PEER_DATABASE_HOST=dejima-insurance-postgres.dejima-insurance-client-net"
     #detach: true
     interactive: true
     tty: true
     volume: ["peer:/peer"]
-  postgres3:
+  insurance-peer:
+    image: "dfherr/dejima-prototype:latest"
+    requires:
+      - "insurance-postgres"
+    networks: ["net", "insurance-peer-net"]
+    env:
+      - "RAILS_ENV=peer_development"
+      - "PEER_TYPE=insurance"
+      - "PEER_NETWORK_ADDRESS=dejima-insurance-peer.dejima-net"
+      - "DEJIMA_PEER_DATABASE_HOST=dejima-insurance-postgres.dejima-insurance-peer-net"
+    #detach: true
+    interactive: true
+    tty: true
+    volume: ["peer:/peer"]
+  insurance-postgres:
     image: "dfherr/dejima-postgres:latest"
-    networks: ["peer3-net"]
+    networks: ["insurance-peer-net", "insurance-client-net"]
     env:
       - "POSTGRES_USER=postgres"
       - "POSTGRES_PASSWORD=foobar"
-      - "DEJIMA_API_ENDPOINT=dejima-peer3.dejima-peer3-net:3000/dejima/propagate"
+      - "DEJIMA_API_ENDPOINT=dejima-insurance-peer.dejima-insurance-peer-net:3000/dejima/propagate"
     run:
       detach: true
     exec:
@@ -94,13 +120,13 @@ services:
       interactive: true
 
 groups:
-  dejima: ["peer1", "peer2", "peer3"]
+  dejima: ["gov-peer", "bank-peer", "insurance-peer"]
 
 networks:
   net:
-  peer1-net:
-  peer2-net:
-  peer3-net:
-  client1-net:
-  client2-net:
-  client3-net:
+  gov-peer-net:
+  bank-peer-net:
+  insurance-peer-net:
+  gov-client-net:
+  bank-client-net:
+  insurance-client-net:

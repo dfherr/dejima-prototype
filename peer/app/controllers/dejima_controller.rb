@@ -52,16 +52,36 @@ class DejimaController < ApplicationController
 
   # only available for config.prototype_role == :peer
   def propagate
-    Rails.logger.info "Propagate:\n #{params}"
-    DejimaProxy.send_update_dejima_table("test")
+    params.permit! # permit all, this api endpoint is used by the database
+    params_hash = params.to_h
+    payload_hash = {}
+    # Parameters: {"view"=>"public.dejima_bank", "insertion"=>[{"first_name"=>"John", "last_name"=>"Doe", "phone"=>nil, "address"=>nil}], "deletion"=>[]}
+    payload_hash[:view] = params_hash["view"]
+    payload_hash[:insertion] = params_hash["insertion"]
+    payload_hash[:deletion] = params_hash["deletion"]
+    binding.pry
+    DejimaProxy.send_update_dejima_table(JSON.generate(payload_hash))
     render text: "true"
   end
 
   # only available for config.prototype_role == :peer
   def update_dejima_table
-    Rails.logger.info "Update dejima table:\n #{params}"
-    ActiveRecord::Base.connection.execute("INSERT INTO dejima_bank (first_name, last_name) VALUES ('John', 'Doe');")
-    render text: "true"
+    sql_statements = []
+    binding.pry
+    params["insertion"].each do |insert|
+      sql_columns = "("
+      sql_values = "("
+      insert.each do |column, value|
+        sql_columns += "#{column}, "
+        sql_values += "'#{value}', "
+      end
+      sql_columns = sql_columns[0..-3] + ")"
+      sql_values = sql_values[0..-3] + ")"
+      sql_statements << "INSERT INTO #{params["view"]} #{sql_columns} VALUES #{sql_values};"
+    end
+    Rails.logger.info("Updating dejima table #{params["view"]} with statements:\n#{sql_statements.join("\n")}")
+    ActiveRecord::Base.connection.execute(sql_statements.join("\n"))
+    render json: "true"
   end
 
   # only available for config.prototype_role == :client

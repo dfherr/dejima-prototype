@@ -46,7 +46,7 @@ AS $$
         deletion_data := '[]';
     END IF; 
     IF (insertion_data IS DISTINCT FROM '[]') OR (insertion_data IS DISTINCT FROM '[]') THEN 
-        user_name := (SELECT current_user);
+        user_name := (SELECT session_user);
         IF NOT (user_name = 'dejima') THEN 
             json_data := concat('{"view": ' , '"public.dejima_insurance"', ', ' , '"insertion": ' , insertion_data , ', ' , '"deletion": ' , deletion_data , '}');
             result := public.dejima_insurance_run_shell(json_data);
@@ -60,12 +60,12 @@ AS $$
                     EXECUTE 'SELECT ' || func into tv;
                 END LOOP;
             ELSE
-                -- RAISE NOTICE 'result from running the sh script: %', result;
+                -- RAISE LOG 'result from running the sh script: %', result;
                 RAISE check_violation USING MESSAGE = 'update on view is rejected by the external tool, result from running the sh script: ' 
                 || result;
             END IF;
         ELSE 
-            RAISE LOG 'send request to dejima proxy after serving the user %', user_name;
+            RAISE LOG 'function of detecting dejima update is called by % , no request sent to dejima proxy', user_name;
         END IF;
     END IF;
   END IF;
@@ -109,7 +109,7 @@ AS $$
         deletion_data := '[]';
     END IF; 
     IF (insertion_data IS DISTINCT FROM '[]') OR (insertion_data IS DISTINCT FROM '[]') THEN 
-        user_name := (SELECT current_user);
+        user_name := (SELECT session_user);
         IF NOT (user_name = 'dejima') THEN 
             json_data := concat('{"view": ' , '"public.dejima_insurance"', ', ' , '"insertion": ' , insertion_data , ', ' , '"deletion": ' , deletion_data , '}');
             result := public.dejima_insurance_run_shell(json_data);
@@ -123,12 +123,12 @@ AS $$
                     EXECUTE 'SELECT ' || func into tv;
                 END LOOP;
             ELSE
-                -- RAISE NOTICE 'result from running the sh script: %', result;
+                -- RAISE LOG 'result from running the sh script: %', result;
                 RAISE check_violation USING MESSAGE = 'update on view is rejected by the external tool, result from running the sh script: ' 
                 || result;
             END IF;
         ELSE 
-            RAISE LOG 'send request to dejima proxy after serving the user %', user_name;
+            RAISE LOG 'function of detecting dejima update is called by % , no request sent to dejima proxy', user_name;
         END IF;
     END IF;
   END IF;
@@ -168,7 +168,7 @@ AS $$
 temprecΔ_ins_insurance_users public.insurance_users%ROWTYPE;
   BEGIN
     IF NOT EXISTS (SELECT * FROM information_schema.tables WHERE table_name = 'dejima_insurance_delta_action_flag') THEN
-        -- RAISE NOTICE 'execute procedure dejima_insurance_delta_action';
+        -- RAISE LOG 'execute procedure dejima_insurance_delta_action';
         CREATE TEMPORARY TABLE dejima_insurance_delta_action_flag ON COMMIT DROP AS (SELECT true as finish);
         IF EXISTS (SELECT WHERE false )
         THEN 
@@ -226,19 +226,19 @@ DROP TABLE Δ_ins_insurance_users;
             deletion_data := '[]';
         END IF; 
         IF (insertion_data IS DISTINCT FROM '[]') OR (insertion_data IS DISTINCT FROM '[]') THEN 
-            user_name := (SELECT current_user);
+            user_name := (SELECT session_user);
             IF NOT (user_name = 'dejima') THEN 
                 json_data := concat('{"view": ' , '"public.dejima_insurance"', ', ' , '"insertion": ' , insertion_data , ', ' , '"deletion": ' , deletion_data , '}');
                 result := public.dejima_insurance_run_shell(json_data);
                 IF result = 'true' THEN 
                     REFRESH MATERIALIZED VIEW public.__dummy__materialized_dejima_insurance;
                 ELSE
-                    -- RAISE NOTICE 'result from running the sh script: %', result;
+                    -- RAISE LOG 'result from running the sh script: %', result;
                     RAISE check_violation USING MESSAGE = 'update on view is rejected by the external tool, result from running the sh script: ' 
                     || result;
                 END IF;
             ELSE 
-                RAISE LOG 'send request to dejima proxy after serving the user %', user_name;
+                RAISE LOG 'function of detecting dejima update is called by % , no request sent to dejima proxy', user_name;
             END IF;
         END IF;
     END IF;
@@ -267,7 +267,7 @@ AS $$
   BEGIN
     IF NOT EXISTS (SELECT * FROM information_schema.tables WHERE table_name = '__temp__Δ_ins_dejima_insurance' OR table_name = '__temp__Δ_del_dejima_insurance')
     THEN
-        -- RAISE NOTICE 'execute procedure dejima_insurance_materialization';
+        -- RAISE LOG 'execute procedure dejima_insurance_materialization';
         REFRESH MATERIALIZED VIEW public.__dummy__materialized_dejima_insurance;
         CREATE TEMPORARY TABLE __temp__Δ_ins_dejima_insurance ( LIKE public.__dummy__materialized_dejima_insurance INCLUDING ALL ) WITH OIDS ON COMMIT DROP;
         CREATE CONSTRAINT TRIGGER __temp__dejima_insurance_trigger_delta_action
@@ -309,9 +309,9 @@ AS $$
   text_var2 text;
   text_var3 text;
   BEGIN
-    -- RAISE NOTICE 'execute procedure dejima_insurance_update';
+    -- RAISE LOG 'execute procedure dejima_insurance_update';
     IF TG_OP = 'INSERT' THEN
-      -- raise notice 'NEW: %', NEW;
+      -- RAISE LOG 'NEW: %', NEW;
       DELETE FROM __temp__Δ_del_dejima_insurance WHERE ROW(FIRST_NAME,LAST_NAME,ADDRESS,BIRTHDATE) IS NOT DISTINCT FROM NEW;
       INSERT INTO __temp__Δ_ins_dejima_insurance SELECT (NEW).*; 
     ELSIF TG_OP = 'UPDATE' THEN
@@ -320,7 +320,7 @@ AS $$
       DELETE FROM __temp__Δ_del_dejima_insurance WHERE ROW(FIRST_NAME,LAST_NAME,ADDRESS,BIRTHDATE) IS NOT DISTINCT FROM NEW;
       INSERT INTO __temp__Δ_ins_dejima_insurance SELECT (NEW).*; 
     ELSIF TG_OP = 'DELETE' THEN
-      -- raise notice 'OLD: %', OLD;
+      -- RAISE LOG 'OLD: %', OLD;
       DELETE FROM __temp__Δ_ins_dejima_insurance WHERE ROW(FIRST_NAME,LAST_NAME,ADDRESS,BIRTHDATE) IS NOT DISTINCT FROM OLD;
       INSERT INTO __temp__Δ_del_dejima_insurance SELECT (OLD).*;
     END IF;

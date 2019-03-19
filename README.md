@@ -6,4 +6,4 @@
 
 Copyright (c) 2019 Dennis-Florian Herr
 
-Created as part of my master thesis @ TUM
+Created as part of my master thesis @ TUM and the Big Data Engineering Lab of Osaka University

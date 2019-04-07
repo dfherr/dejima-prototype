@@ -30,7 +30,7 @@ Therefore you need to install:
 
 While rebuilding the images is not necessary for regular development (see Configuration below), it is necessary to rebuild the images to modify the installed packages inside the images.
 
-The images are hosted on Dockerhub and can be built locally. The peer [Dockerfile](Dockerfile) is in the root directory. The Dockerfile for the modified postgres database is in [docker-postgres/Dockerfile](docker-postgres/Dockerfile). Both images use the very small alpine base images.
+The images are hosted on Dockerhub and can be built locally. The peer [Dockerfile](Dockerfile) is in the root directory. The Dockerfile for the modified postgres database is in [docker-postgres/Dockerfile](docker-postgres/Dockerfile). Both images use the very small alpine base images. A [Makefile](Makefile) is provided to easily update the images. Running `make build` in the project root will rebuild the docker image locally.
 
 ## How to use
 

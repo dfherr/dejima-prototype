@@ -34,7 +34,7 @@ The images are hosted on Dockerhub and can be built locally. The peer [Dockerfil
 
 ## How to use
 
-The project can be easily used with the crane orchestration tool and the provided orchestration file. It provides an easy configuration format for starting docker container.
+The project can be easily used with the crane orchestration tool and the provided [orchestration file](crane.yml). It provides an easy configuration format for starting docker container.
 
 Simply boot up the peers and possibly clients in *seperate* shells using the following commands:
 
@@ -73,7 +73,7 @@ The database will automatically be restarted and setup the next time either `ban
 
 ## Peer code structure
 
-The peer code uses the default Ruby on Rails architecture with some tweaks for the dejima architecture.
+The peer code uses the default Ruby on Rails architecture with some tweaks for the dejima architecture. The environment variable `RAILS_ENV` controls client/peer behavior and development/test/production environment. The environment variable `PEER_TYPE` control bank/government/insurance types.
 
 Here is an overview of the most important files:
 

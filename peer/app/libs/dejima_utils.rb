@@ -26,7 +26,7 @@ module DejimaUtils
               
             responses.each do |peer, response|
                 peer_groups[dejima_tables][:visited] << peer
-                next if response == "ok"
+                next if response == "ok" || response == "connection_error"
                 # response contains all the entries that signal peer_group_updates
                 response.each do |peer_group_update|
                     # TODO:

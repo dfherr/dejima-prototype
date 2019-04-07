@@ -57,23 +57,25 @@ class DejimaController < ApplicationController
     payload_hash = {}
     # Parameters: {"view"=>"public.dejima_bank", "insertion"=>[{"first_name"=>"John", "last_name"=>"Doe", "phone"=>nil, "address"=>nil}], "deletion"=>[]}
     payload_hash[:view] = params_hash["view"]
-    payload_hash[:insertion] = params_hash["insertion"]
-    payload_hash[:deletion] = params_hash["deletion"]
-    binding.pry
-    DejimaProxy.send_update_dejima_table(JSON.generate(payload_hash))
-    render text: "true"
+    payload_hash[:insertions] = params_hash["insertions"]
+    payload_hash[:deletions] = params_hash["deletions"]
+    DejimaProxy.send_update_dejima_table(payload_hash)
+    render json: "true"
   end
 
   # only available for config.prototype_role == :peer
   def update_dejima_table
     sql_statements = []
-    binding.pry
-    params["insertion"].each do |insert|
+    params["insertions"].each do |insert|
       sql_columns = "("
       sql_values = "("
       insert.each do |column, value|
         sql_columns += "#{column}, "
-        sql_values += "'#{value}', "
+        if value.nil?
+          sql_values += "NULL, "
+        else
+          sql_values += "'#{value}', "
+        end
       end
       sql_columns = sql_columns[0..-3] + ")"
       sql_values = sql_values[0..-3] + ")"
@@ -88,9 +90,7 @@ class DejimaController < ApplicationController
   def create_user
     first_name = params["first_name"] || "John"
     last_name = params["last_name"] || "Doe"
-    puts ActiveRecord::Base.connection.execute("SELECT current_user").values
     BankUser.create(first_name: first_name, last_name: last_name)
-    puts ActiveRecord::Base.connection.execute("SELECT current_user").values
   end
 
 end

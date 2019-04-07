@@ -8,13 +8,20 @@ module DejimaProxy
         responses = {}
         peers.each do |peer|
             begin
+                RestClient::Request.execute(method: :get, url: "#{peer}:3000/hello",
+                    timeout: 5) # quick check for unresponsive peer
                 response = RestClient.post("#{peer}:3000/dejima/detect", payload)
                 Rails.logger.info "Peer #{peer} responded: #{response}"
                 responses[peer] = JSON.parse response.body
             rescue RestClient::ExceptionWithResponse => e
-                Rails.logger.warn "RestClient Error response: #{e.response}"
+                Rails.logger.warn "RestClient error for peer #{peer}: #{e}"
+                responses[peer] = "connection_error"
             rescue SocketError => e
                 Rails.logger.warn "Couldn't open socket to peer #{peer}: #{e}"
+                responses[peer] = "connection_error"
+            rescue Errno::ECONNREFUSED => e
+                Rails.logger.warn "Connection to peer #{peer} refused: #{e}"
+                responses[peer] = "connection_error"
             end
         end
         responses
@@ -22,18 +29,19 @@ module DejimaProxy
 
     def self.send_update_dejima_table(payload)
         peers = ["dejima-gov-peer.dejima-net"]
-        binding.pry
         Rails.logger.info("Sending updates for remote dejima tables.\n Peers: #{peers}\n Payload: #{payload}")
         responses = {}
         peers.each do |peer|
             begin
-                response = RestClient.post("#{peer}:3000/dejima/update_dejima_table", payload)
+                response = RestClient.post("#{peer}:3000/dejima/update_dejima_table", JSON.generate(payload), {content_type: :json, accept: :json})
                 Rails.logger.info "Peer #{peer} responded: #{response}"
                 responses[peer] = JSON.parse response.body
             rescue RestClient::ExceptionWithResponse => e
-                Rails.logger.warn "RestClient Error response: #{e.response}"
+                Rails.logger.warn "RestClient error for peer #{peer}: #{e}"
             rescue SocketError => e
                 Rails.logger.warn "Couldn't open socket to peer #{peer}: #{e}"
+            rescue Errno::ECONNREFUSED => e
+                Rails.logger.warn "Connection to peer #{peer} refused: #{e}"
             end
         end
         responses

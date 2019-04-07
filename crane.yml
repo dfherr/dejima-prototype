@@ -67,6 +67,7 @@ services:
     interactive: true
     tty: true
     volume: ["peer:/peer"]
+    publish: ["80:3000"]
   bank-postgres:
     image: "dfherr/dejima-postgres:latest"
     networks: ["bank-peer-net", "bank-client-net"]

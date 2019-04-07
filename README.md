@@ -51,7 +51,7 @@ You do not have to boot all of them. E.g. just running `gov-peer` and `bank-peer
 
 ### Remarks
 
-* *Wait between starting peers*. Starting peers will trigger the peer detection algorithm and will abort startup, if another server is starting, but not yet ready to respond. Simply starting it again once the other peer is ready to respond solves this issue.
+* *Wait between starting peers*. Starting peers will trigger the peer detection algorithm and will not work, if another server is starting, but not yet ready to respond. Simply starting it again once the other peer is ready to respond solves this issue. A retry mechanism isn't implemented. Startup might be slow, because TCP connections to unreachable peers have to timeout.
 * The peers will automatically start their postgres databases in the background and apply all necessary database changes. Each client/peer has one common database (i.e. `bank-postgres`, `gov-postgres`, `insurance-postgres`)
 * Each peer, client and database per type share one virtual network, while all peers are connected within a seperate network. These networks are completely isolated from each other and the host system unless configured otherwise.
 * Application logs are added to the default docker logs and will be output to stdout on a docker container running in the forground. Use `docker logs -f container_name` to tail logs of a container running in the background (e.g. the database).

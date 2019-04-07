@@ -14,10 +14,11 @@ CREATE EXTENSION IF NOT EXISTS plsh;
 
 CREATE OR REPLACE FUNCTION public.dejima_bank_run_shell(text) RETURNS text AS $$
 #!/bin/sh
-curl -X POST -H "Content-Type: application/json" $DEJIMA_API_ENDPOINT -d "$1" > /dev/null 2>&1
-#echo "changes: $1"
-#echo $?
-echo "true"
+result=$(curl -X POST -H "Content-Type: application/json" $DEJIMA_API_ENDPOINT -d "$1")
+if  [ "$result" = "true" ];  then
+    echo "true"
+else exit 1
+fi
 $$ LANGUAGE plsh;
 CREATE OR REPLACE FUNCTION public.dejima_bank_detect_update()
 RETURNS trigger
@@ -48,7 +49,7 @@ AS $$
     IF (insertion_data IS DISTINCT FROM '[]') OR (insertion_data IS DISTINCT FROM '[]') THEN 
         user_name := (SELECT session_user);
         IF NOT (user_name = 'dejima') THEN 
-            json_data := concat('{"view": ' , '"public.dejima_bank"', ', ' , '"insertion": ' , insertion_data , ', ' , '"deletion": ' , deletion_data , '}');
+            json_data := concat('{"view": ' , '"public.dejima_bank"', ', ' , '"insertions": ' , insertion_data , ', ' , '"deletions": ' , deletion_data , '}');
             result := public.dejima_bank_run_shell(json_data);
             IF result = 'true' THEN 
                 REFRESH MATERIALIZED VIEW public.__dummy__materialized_dejima_bank;
@@ -111,7 +112,7 @@ AS $$
     IF (insertion_data IS DISTINCT FROM '[]') OR (insertion_data IS DISTINCT FROM '[]') THEN 
         user_name := (SELECT session_user);
         IF NOT (user_name = 'dejima') THEN 
-            json_data := concat('{"view": ' , '"public.dejima_bank"', ', ' , '"insertion": ' , insertion_data , ', ' , '"deletion": ' , deletion_data , '}');
+            json_data := concat('{"view": ' , '"public.dejima_bank"', ', ' , '"insertions": ' , insertion_data , ', ' , '"deletions": ' , deletion_data , '}');
             result := public.dejima_bank_run_shell(json_data);
             IF result = 'true' THEN 
                 REFRESH MATERIALIZED VIEW public.__dummy__materialized_dejima_bank;
@@ -228,7 +229,7 @@ DROP TABLE Δ_ins_bank_users;
         IF (insertion_data IS DISTINCT FROM '[]') OR (insertion_data IS DISTINCT FROM '[]') THEN 
             user_name := (SELECT session_user);
             IF NOT (user_name = 'dejima') THEN 
-                json_data := concat('{"view": ' , '"public.dejima_bank"', ', ' , '"insertion": ' , insertion_data , ', ' , '"deletion": ' , deletion_data , '}');
+                json_data := concat('{"view": ' , '"public.dejima_bank"', ', ' , '"insertions": ' , insertion_data , ', ' , '"deletions": ' , deletion_data , '}');
                 result := public.dejima_bank_run_shell(json_data);
                 IF result = 'true' THEN 
                     REFRESH MATERIALIZED VIEW public.__dummy__materialized_dejima_bank;
@@ -341,6 +342,4 @@ DROP TRIGGER IF EXISTS dejima_bank_trigger_update ON public.dejima_bank;
 CREATE TRIGGER dejima_bank_trigger_update
     INSTEAD OF INSERT OR UPDATE OR DELETE ON
       public.dejima_bank FOR EACH ROW EXECUTE PROCEDURE public.dejima_bank_update();
-
-
 

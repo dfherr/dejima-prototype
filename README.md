@@ -47,6 +47,8 @@ crane run insurance-peer
 crane run insurance-client
 ```
 
+You do not have to boot all of them. E.g. just running `gov-peer` and `bank-peer` will create a simple dejima network with one dejima group.
+
 ### Remarks
 
 * *Wait between starting peers*. Starting peers will trigger the peer detection algorithm and will abort startup, if another server is starting, but not yet ready to respond. Simply starting it again once the other peer is ready to respond solves this issue.

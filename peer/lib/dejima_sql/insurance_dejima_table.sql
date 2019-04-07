@@ -14,10 +14,11 @@ CREATE EXTENSION IF NOT EXISTS plsh;
 
 CREATE OR REPLACE FUNCTION public.dejima_insurance_run_shell(text) RETURNS text AS $$
 #!/bin/sh
-curl -X POST -H "Content-Type: application/json" $DEJIMA_API_ENDPOINT -d '$1' > /dev/null 2>&1
-#echo "changes: '$1'"
-#echo $?
-echo "true"
+result=$(curl -X POST -H "Content-Type: application/json" $DEJIMA_API_ENDPOINT -d "$1")
+if  [ "$result" = "true" ];  then
+    echo "true"
+else exit 1
+fi
 $$ LANGUAGE plsh;
 CREATE OR REPLACE FUNCTION public.dejima_insurance_detect_update()
 RETURNS trigger
@@ -48,7 +49,7 @@ AS $$
     IF (insertion_data IS DISTINCT FROM '[]') OR (insertion_data IS DISTINCT FROM '[]') THEN 
         user_name := (SELECT session_user);
         IF NOT (user_name = 'dejima') THEN 
-            json_data := concat('{"view": ' , '"public.dejima_insurance"', ', ' , '"insertion": ' , insertion_data , ', ' , '"deletion": ' , deletion_data , '}');
+            json_data := concat('{"view": ' , '"public.dejima_insurance"', ', ' , '"insertions": ' , insertion_data , ', ' , '"deletions": ' , deletion_data , '}');
             result := public.dejima_insurance_run_shell(json_data);
             IF result = 'true' THEN 
                 REFRESH MATERIALIZED VIEW public.__dummy__materialized_dejima_insurance;
@@ -111,7 +112,7 @@ AS $$
     IF (insertion_data IS DISTINCT FROM '[]') OR (insertion_data IS DISTINCT FROM '[]') THEN 
         user_name := (SELECT session_user);
         IF NOT (user_name = 'dejima') THEN 
-            json_data := concat('{"view": ' , '"public.dejima_insurance"', ', ' , '"insertion": ' , insertion_data , ', ' , '"deletion": ' , deletion_data , '}');
+            json_data := concat('{"view": ' , '"public.dejima_insurance"', ', ' , '"insertions": ' , insertion_data , ', ' , '"deletions": ' , deletion_data , '}');
             result := public.dejima_insurance_run_shell(json_data);
             IF result = 'true' THEN 
                 REFRESH MATERIALIZED VIEW public.__dummy__materialized_dejima_insurance;
@@ -228,7 +229,7 @@ DROP TABLE Δ_ins_insurance_users;
         IF (insertion_data IS DISTINCT FROM '[]') OR (insertion_data IS DISTINCT FROM '[]') THEN 
             user_name := (SELECT session_user);
             IF NOT (user_name = 'dejima') THEN 
-                json_data := concat('{"view": ' , '"public.dejima_insurance"', ', ' , '"insertion": ' , insertion_data , ', ' , '"deletion": ' , deletion_data , '}');
+                json_data := concat('{"view": ' , '"public.dejima_insurance"', ', ' , '"insertions": ' , insertion_data , ', ' , '"deletions": ' , deletion_data , '}');
                 result := public.dejima_insurance_run_shell(json_data);
                 IF result = 'true' THEN 
                     REFRESH MATERIALIZED VIEW public.__dummy__materialized_dejima_insurance;

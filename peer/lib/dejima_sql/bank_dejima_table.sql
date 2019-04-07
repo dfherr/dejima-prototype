@@ -14,10 +14,12 @@ CREATE EXTENSION IF NOT EXISTS plsh;
 
 CREATE OR REPLACE FUNCTION public.dejima_bank_run_shell(text) RETURNS text AS $$
 #!/bin/sh
-result=$(curl -X POST -H "Content-Type: application/json" $DEJIMA_API_ENDPOINT -d "$1")
+result=$(curl -s -X POST -H "Content-Type: application/json" $DEJIMA_API_ENDPOINT -d "$1")
 if  [ "$result" = "true" ];  then
     echo "true"
-else exit 1
+else 
+    echo $result
+    exit 1
 fi
 $$ LANGUAGE plsh;
 CREATE OR REPLACE FUNCTION public.dejima_bank_detect_update()

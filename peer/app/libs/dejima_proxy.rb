@@ -3,28 +3,24 @@ require 'rest-client'
 
 module DejimaProxy
 
-    def self.send_peer_group_request(peers, payload)
-        Rails.logger.info("Sending peer group request.\n Peers: #{peers}\n Payload: #{payload}")
-        responses = {}
-        peers.each do |peer|
-            begin
-                RestClient::Request.execute(method: :get, url: "#{peer}:3000/hello",
-                    timeout: 5) # quick check for unresponsive peer
-                response = RestClient.post("#{peer}:3000/dejima/detect", payload)
-                Rails.logger.info "Peer #{peer} responded: #{response}"
-                responses[peer] = JSON.parse response.body
-            rescue RestClient::ExceptionWithResponse => e
-                Rails.logger.warn "RestClient error for peer #{peer}: #{e}"
-                responses[peer] = "connection_error"
-            rescue SocketError => e
-                Rails.logger.warn "Couldn't open socket to peer #{peer}: #{e}"
-                responses[peer] = "connection_error"
-            rescue Errno::ECONNREFUSED => e
-                Rails.logger.warn "Connection to peer #{peer} refused: #{e}"
-                responses[peer] = "connection_error"
-            end
+    def self.send_peer_group_request(peer, peer_groups)
+        Rails.logger.info("Sending peer group request.\n Peers: #{peers}\n Payload: #{peer_groups}")
+        begin
+            RestClient::Request.execute(method: :get, url: "#{peer}:3000/hello",
+                timeout: 5) # quick check for unresponsive peer
+            response = RestClient.post("#{peer}:3000/dejima/detect", {peer_groups: peer_groups})
+            Rails.logger.info "Peer #{peer} responded: #{response}"
+            JSON.parse(response.body, symbolize_name: true).map(&PeerGroup.method(:new))
+        rescue RestClient::ExceptionWithResponse => e
+            Rails.logger.warn "RestClient error for peer #{peer}: #{e}"
+            "connection_error"
+        rescue SocketError => e
+            Rails.logger.warn "Couldn't open socket to peer #{peer}: #{e}"
+            "connection_error"
+        rescue Errno::ECONNREFUSED => e
+            Rails.logger.warn "Connection to peer #{peer} refused: #{e}"
+            "connection_error"
         end
-        responses
     end
 
     def self.send_update_dejima_table(payload)

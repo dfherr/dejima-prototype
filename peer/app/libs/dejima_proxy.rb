@@ -4,11 +4,11 @@ require 'rest-client'
 module DejimaProxy
 
     def self.send_peer_group_request(peer, peer_groups)
-        Rails.logger.info("Sending peer group request.\n Peers: #{peers}\n Payload: #{peer_groups}")
+        Rails.logger.info("Sending peer group request.\n Peer: #{peer}\n Payload: #{peer_groups}")
         begin
             RestClient::Request.execute(method: :get, url: "#{peer}:3000/hello",
                 timeout: 5) # quick check for unresponsive peer
-            response = RestClient.post("#{peer}:3000/dejima/detect", {peer_groups: peer_groups})
+            response = RestClient.post("#{peer}:3000/dejima/detect", {peer_groups: peer_groups.to_json})
             Rails.logger.info "Peer #{peer} responded: #{response}"
             JSON.parse(response.body, symbolize_name: true).map(&PeerGroup.method(:new))
         rescue RestClient::ExceptionWithResponse => e

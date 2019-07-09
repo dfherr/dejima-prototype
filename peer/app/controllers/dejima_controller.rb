@@ -13,13 +13,13 @@ class DejimaController < ApplicationController
     # needs to be synchronized to avoid race conditions on 
     # multiple peers initilizing at the same time
     # this mutex might be redundant, because we are running in single server mode and 
-    # it would not work in multi-worker mode as it's not shared across processes, but
-    # it illustrates the concept
+    # it probably would not work in multi-worker mode as it's not shared across processes,
+    # but it illustrates the concept
     @mutex.synchronize do
       Rails.logger.info "Responding to detection request"
       remote_peer_groups = JSON.parse(params["peer_groups"], symbolize_names: true).map(&PeerGroup.method(:new))
-      
-      render json: DejimaUtils.compare_remote_peer_groups remote_peer_groups
+      binding.pry
+      render json: DejimaUtils.compare_remote_peer_groups(remote_peer_groups)
     end
   end
 

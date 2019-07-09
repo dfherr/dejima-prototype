@@ -16,12 +16,12 @@ ActiveRecord::Schema.define(version: 2019_03_14_133703) do
   enable_extension "plpgsql"
   enable_extension "plsh"
 
-  create_table "government_users", force: :cascade do |t|
+  create_table "bank_users", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
-    t.string "phone"
+    t.string "iban"
     t.string "address"
-    t.date "birthdate"
+    t.string "phone"
   end
 
 end

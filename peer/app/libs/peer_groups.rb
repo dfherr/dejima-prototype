@@ -33,7 +33,8 @@ module PeerGroups
     # 
     def self.add_new_peer_group(new_group)
         peer_groups = PeerGroups.get
-        peer_groups.each do |peer_group|
+        peer_groups_clone = peer_groups.clone # clone, so we can change the peer_groups hash during iteration
+        peer_groups_clone.each_value do |peer_group|
             next if peer_group.dejima_tables.disjoint? new_group.dejima_tables
             shared_attributes = peer_group.attributes.intersection new_group.attributes
             next if shared_attributes.empty?

@@ -18,7 +18,6 @@ class DejimaController < ApplicationController
     @mutex.synchronize do
       Rails.logger.info "Responding to detection request"
       remote_peer_groups = JSON.parse(params["peer_groups"], symbolize_names: true).map(&PeerGroup.method(:new))
-      binding.pry
       render json: DejimaUtils.compare_remote_peer_groups(remote_peer_groups)
     end
   end

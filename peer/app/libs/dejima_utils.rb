@@ -18,7 +18,6 @@ module DejimaUtils
     def self.compare_remote_peer_groups(remote_peer_groups)
         found_groups = Set.new
         remote_peer_groups.each do |remote_peer_group|
-            binding.pry
             PeerGroups.get.each_value do |peer_group|
                 if peer_group.dejima_tables.intersect? remote_peer_group.dejima_tables
                     found_groups << peer_group

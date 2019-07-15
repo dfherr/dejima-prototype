@@ -20,14 +20,14 @@ class PeerGroup
 
   # update this groups peers based on another peer_group
   def update_peers(other_group)
-    peers = peers.union other_group.peers
+    self.peers = self.peers.union other_group.peers
   end
 
   def as_json(opts={})
     {
-      dejima_tables: dejima_tables.to_a.map(&:to_s),
-      attributes: attributes.to_a,
-      peers: peers.to_a
+      dejima_tables: self.dejima_tables.to_a.map(&:to_s),
+      attributes: self.attributes.to_a,
+      peers: self.peers.to_a
     }
   end
 end

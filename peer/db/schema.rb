@@ -10,18 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_14_133703) do
+ActiveRecord::Schema.define(version: 2019_07_15_202825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "plsh"
 
-  create_table "bank_users", force: :cascade do |t|
+  create_table "government_users", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
-    t.string "iban"
-    t.string "address"
     t.string "phone"
+    t.string "address"
+    t.date "birthdate"
+  end
+
+  create_table "peer_groups_stores", force: :cascade do |t|
+    t.jsonb "peer_groups", default: {}
+    t.boolean "singleton", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["singleton"], name: "index_peer_groups_stores_on_singleton", unique: true
   end
 
 end

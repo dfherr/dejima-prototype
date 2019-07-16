@@ -1,5 +1,4 @@
 class DejimaController < ApplicationController
-
   def initialize
     super
     @mutex = Mutex.new
@@ -10,9 +9,9 @@ class DejimaController < ApplicationController
   def detect
     raise "Only peer role can run detection" unless Rails.application.config.prototype_role == :peer
 
-    # needs to be synchronized to avoid race conditions on 
+    # needs to be synchronized to avoid race conditions on
     # multiple peers initilizing at the same time
-    # this mutex might be redundant, because we are running in single server mode and 
+    # this mutex might be redundant, because we are running in single server mode and
     # it probably would not work in multi-worker mode as it's not shared across processes,
     # but it illustrates the concept
     @mutex.synchronize do
@@ -24,9 +23,7 @@ class DejimaController < ApplicationController
 
   # update config based on newer detection run of a peer
   # only available for config.prototype_role == :peer
-  def update_peers
-
-  end
+  def update_peers; end
 
   # only available for config.prototype_role == :peer
   def propagate
@@ -49,17 +46,17 @@ class DejimaController < ApplicationController
       sql_values = "("
       insert.each do |column, value|
         sql_columns += "#{column}, "
-        if value.nil?
-          sql_values += "NULL, "
-        else
-          sql_values += "'#{value}', "
-        end
+        sql_values += if value.nil?
+                        "NULL, "
+                      else
+                        "'#{value}', "
+                      end
       end
       sql_columns = sql_columns[0..-3] + ")"
       sql_values = sql_values[0..-3] + ")"
-      sql_statements << "INSERT INTO #{params["view"]} #{sql_columns} VALUES #{sql_values};"
+      sql_statements << "INSERT INTO #{params['view']} #{sql_columns} VALUES #{sql_values};"
     end
-    Rails.logger.info("Updating dejima table #{params["view"]} with statements:\n#{sql_statements.join("\n")}")
+    Rails.logger.info("Updating dejima table #{params['view']} with statements:\n#{sql_statements.join("\n")}")
     ActiveRecord::Base.connection.execute(sql_statements.join("\n"))
     render json: "true"
   end
@@ -70,5 +67,4 @@ class DejimaController < ApplicationController
     last_name = params["last_name"] || "Doe"
     BankUser.create(first_name: first_name, last_name: last_name)
   end
-
 end

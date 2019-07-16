@@ -12,5 +12,4 @@ Rails.application.routes.draw do
       get 'create_user', to: 'dejima#create_user', controller: 'dejima'
     end
   end
-  
 end

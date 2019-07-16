@@ -3,7 +3,7 @@
 # A peer group is identified by it's set of Dejima tables
 # Further it holds a set of peer addresses and the attributes it is responsible for
 #
-# Note: To simplify the code, this assumes a no-transformation setup, 
+# Note: To simplify the code, this assumes a no-transformation setup,
 # where dependent attributes in different tables have the same attribute name
 class PeerGroup
   attr_accessor :dejima_tables,
@@ -20,14 +20,14 @@ class PeerGroup
 
   # update this groups peers based on another peer_group
   def update_peers(other_group)
-    self.peers = self.peers.union other_group.peers
+    self.peers = peers.union other_group.peers
   end
 
-  def as_json(opts={})
+  def as_json(_opts = {})
     {
-      dejima_tables: self.dejima_tables.to_a.map(&:to_s),
-      attributes: self.attributes.to_a,
-      peers: self.peers.to_a
+      dejima_tables: dejima_tables.to_a.map(&:to_s),
+      attributes: attributes.to_a,
+      peers: peers.to_a
     }
   end
 end

@@ -26,7 +26,6 @@ class PeerGroupsStore < ApplicationRecord
   private
 
   def singleton
-    raise Exception.new("This is a singleton.") if PeerGroupsStore.count > 0
+    raise Exception, "This is a singleton." if PeerGroupsStore.count > 0
   end
-
 end

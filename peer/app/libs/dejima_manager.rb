@@ -1,4 +1,4 @@
-module DejimaUtils
+module DejimaManager
   # called by config/initializers/dejima_create_peer_groups.rb on startup
   def self.create_peer_groups(*models)
     # when creating we begin with all locally known peer groups

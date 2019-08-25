@@ -11,7 +11,7 @@ services:
     networks:
       - dejima-swarm-network
   logspout:
-    image: gliderlabs/logspout:latest
+    image: dfherr/logspout-logstash:latest
     deploy:
       mode: global
       restart_policy:

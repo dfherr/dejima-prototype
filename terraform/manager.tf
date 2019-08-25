@@ -1,6 +1,6 @@
 resource "google_compute_instance" "dejima_manager" {
   name         = "dejima-manager"
-  machine_type = "${var.image_manager_instance_type}"
+  machine_type = "${var.manager_instance_type}"
   zone         = "us-central1-a"
 
   boot_disk {

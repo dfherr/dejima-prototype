@@ -25,6 +25,8 @@ sudo usermod -aG docker ubuntu
 # Crane
 bash -c "`curl -sL https://raw.githubusercontent.com/michaelsauter/crane/v3.5.0/download.sh`" && sudo mv crane /usr/local/bin/crane
 
+sudo echo "vm.max_map_count=262144" >> /etc/sysctl.conf
+
 # pull the base image
 sudo docker pull dfherr/dejima-prototype:latest
 sudo docker pull dfherr/dejima-postgres:latest

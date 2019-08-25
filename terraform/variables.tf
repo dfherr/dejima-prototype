@@ -3,7 +3,7 @@ variable "image_manager" {
 }
 
 variable "manager_instance_type" {
-  default = "n1-standard-2"
+  default = "n1-standard-4"
 }
 
 variable "image_peer" {

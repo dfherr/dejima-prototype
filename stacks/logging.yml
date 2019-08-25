@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  elk:
+    image: sebp/elk:latest
+    ports:
+      - "9000:9000"
+    deploy:
+      placement:
+        constraints: [node.role==manager]
+    networks:
+      - dejima-swarm-network
+  logspout:
+    image: gliderlabs/logspout:latest
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+        delay: 15s
+        max_attempts: 20
+        window: 60s
+    environment:
+      - "DOCKER_LABELS=true"
+      - "ROUTE_URIS=logstash+tcp://elk:5044"
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock"
+    networks:
+      - dejima-swarm-network
+networks:
+   dejima-swarm-network:
+    external: true

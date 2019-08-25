@@ -1,0 +1,35 @@
+{
+  "description": "Dejima Prototype Image for Google Cloud",
+
+  "variables": {
+    "zone": "us-central1-a",
+    "source_image": "ubuntu-1804-bionic-v20190617",
+    "source_image_family": "ubuntu-minimal-1804-lts",
+    "instance_type": "n1-standard-2"
+  },
+
+  "builders": [
+    {
+      "type": "googlecompute",
+      "account_file": "../wise-vault-250911-credentials.json",
+      "project_id": "wise-vault-250911",
+      "source_image_family": "{{user `source_image_family`}}",
+      "ssh_username": "packer",
+      "zone": "{{user `zone`}}",
+      "image_name": "dejima-prototype-{{timestamp}}",
+      "machine_type": "{{user `instance_type`}}"
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "authorized_keys",
+      "destination": "/tmp/authorized_keys"
+    },
+    {
+      "type": "shell",
+      "scripts": ["manager.sh"]
+    }
+  ]
+}

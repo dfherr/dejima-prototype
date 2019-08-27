@@ -3,7 +3,7 @@ version: '3'
 services:
   peer-bank:
     image: "dfherr/dejima-prototype:latest"
-    networks: ["dejima-swarm-network", "db-net"]
+    networks: ["dejima-swarm-network"]
     environment:
       - "RAILS_ENV=peer_development"
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
@@ -15,7 +15,7 @@ services:
         constraints: [node.hostname==dejima-peer-bank]
   peer-gov:
     image: "dfherr/dejima-prototype:latest"
-    networks: ["dejima-swarm-network", "db-net"]
+    networks: ["dejima-swarm-network"]
     environment:
       - "RAILS_ENV=peer_development"
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
@@ -27,6 +27,4 @@ services:
         constraints: [node.hostname==dejima-peer-gov]
 networks:
   dejima-swarm-network:
-    external: true
-  db-net:
     external: true

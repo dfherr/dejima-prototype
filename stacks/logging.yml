@@ -28,7 +28,8 @@ services:
         window: 60s
     environment:
       - "DOCKER_LABELS=true"
-      - "ROUTE_URIS=logstash+tcp://elk:5044"
+      - "DECODE_JSON_LOGS=false"
+      - "ROUTE_URIS=logstash+udp://elk:5044"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     networks:

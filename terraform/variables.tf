@@ -1,5 +1,5 @@
 variable "image_manager" {
-  default = "wise-vault-250911/dejima-prototype-1566745234"
+  default = "wise-vault-250911/dejima-prototype-1566914689"
 }
 
 variable "manager_instance_type" {
@@ -7,7 +7,7 @@ variable "manager_instance_type" {
 }
 
 variable "image_peer" {
-  default = "wise-vault-250911/dejima-prototype-1566745234"
+  default = "wise-vault-250911/dejima-prototype-1566914689"
 }
 
 variable "peer_instance_type" {
@@ -22,4 +22,12 @@ variable "peer_zone2" {
 }
 variable "peer_zone3" {
   default = "us-west1-a"
+}
+
+variable "peer_zone4" {
+  default = "europe-west3-a"
+}
+
+variable "peer_zone5" {
+  default = "europe-west2-a"
 }

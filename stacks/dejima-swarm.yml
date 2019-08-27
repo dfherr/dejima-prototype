@@ -1,19 +1,32 @@
 version: '3'
 
 services:
-  peer:
+  peer-bank:
     image: "dfherr/dejima-prototype:latest"
-    networks: ["dejima-swarm-network", "peer-net"]
+    networks: ["dejima-swarm-network", "db-net"]
     environment:
       - "RAILS_ENV=peer_development"
-      - "PEER_TYPE=government"
-      - "PEER_NETWORK_ADDRESS=peer.dejima-swarm-network"
-      - "DEJIMA_PEER_DATABASE_HOST=postgres.peer-net"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=bank"
+      - "PEER_NETWORK_ADDRESS=dejima-peer-bank.dejima-swarm-network"
     deploy:
       replicas: 1
       placement:
-        constraints: [node.hostname==dejima-peer1-h4t4]
+        constraints: [node.hostname==dejima-peer-bank]
+  peer-gov:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network", "db-net"]
+    environment:
+      - "RAILS_ENV=peer_development"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=government"
+      - "PEER_NETWORK_ADDRESS=dejima-peer-gov.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-gov]
 networks:
   dejima-swarm-network:
     external: true
-  peer-net:
+  db-net:
+    external: true

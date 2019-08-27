@@ -20,5 +20,7 @@ services:
       - 'POSTGRES_USER=postgres'
       - 'POSTGRES_PASSWORD=foobar'
       - 'DEJIMA_API_ENDPOINT=peer.peer-net:3000/dejima/propagate'
+    publish: ['5432:5432']
+    volume: ['postgres/data:/var/lib/postgresql/data']
 networks:
   peer-net:

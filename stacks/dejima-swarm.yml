@@ -4,6 +4,7 @@ services:
   peer-bank:
     image: "dfherr/dejima-prototype:latest"
     networks: ["dejima-swarm-network"]
+    tty: true
     environment:
       - "RAILS_ENV=peer_development"
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
@@ -16,6 +17,7 @@ services:
   peer-gov:
     image: "dfherr/dejima-prototype:latest"
     networks: ["dejima-swarm-network"]
+    tty: true
     environment:
       - "RAILS_ENV=peer_development"
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"

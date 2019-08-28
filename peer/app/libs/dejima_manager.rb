@@ -101,7 +101,7 @@ module DejimaManager
     remote_peer_groups.each do |peer_group|
       PeerGroups.add_new_peer_group peer_group
     end
-    Rails.logger.info "Updated peer groups: #{PeerGroups.get}"
+    Rails.logger.info "Updated peer groups: #{PeerGroups.get.values.to_json}"
     # broadcast if we detected a conflict
     if conflict
       Rails.logger.info "Initiating broadcast to resolve conflicts."

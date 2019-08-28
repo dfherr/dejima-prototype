@@ -137,13 +137,13 @@ resource "google_compute_instance_from_template" "dejima_peer_insurance3" {
 }
 resource "google_compute_instance_from_template" "dejima_peer_insurance4" {
   name = "dejima-peer-insurance4"
-  zone               = "${var.peer_zone3}"
+  zone               = "${var.peer_zone2}"
 
   source_instance_template = "${google_compute_instance_template.dejima_peer_template.self_link}"
 }
 resource "google_compute_instance_from_template" "dejima_peer_insurance5" {
   name = "dejima-peer-insurance5"
-  zone               = "${var.peer_zone4}"
+  zone               = "${var.peer_zone2}"
 
   source_instance_template = "${google_compute_instance_template.dejima_peer_template.self_link}"
 }

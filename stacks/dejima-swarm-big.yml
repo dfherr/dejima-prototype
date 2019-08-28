@@ -58,8 +58,8 @@ services:
       - "RAILS_LOG_TO_STDOUT=true"
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
       - "PEER_TYPE=bank"
-      - "SHARE_GOV_BANK_PEERS=dejima_peer-gov4.dejima-swarm-network"
-      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank2.dejima-swarm-network"
+      - "SHARE_GOV_BANK_PEERS=dejima_peer-gov2.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank8.dejima-swarm-network"
       - "PEER_NETWORK_ADDRESS=dejima_peer-bank4.dejima-swarm-network"
     deploy:
       replicas: 1
@@ -74,8 +74,8 @@ services:
       - "RAILS_LOG_TO_STDOUT=true"
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
       - "PEER_TYPE=bank"
-      - "SHARE_GOV_BANK_PEERS=dejima_peer-bank4.dejima-swarm-network"
-      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank4.dejima-swarm-network"
+      - "SHARE_GOV_BANK_PEERS=dejima_peer-bank2.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank2.dejima-swarm-network"
       - "PEER_NETWORK_ADDRESS=dejima_peer-bank5.dejima-swarm-network"
     deploy:
       replicas: 1
@@ -90,8 +90,8 @@ services:
       - "RAILS_LOG_TO_STDOUT=true"
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
       - "PEER_TYPE=bank"
-      - "SHARE_GOV_BANK_PEERS=dejima_peer-bank4.dejima-swarm-network"
-      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank4.dejima-swarm-network"
+      - "SHARE_GOV_BANK_PEERS=dejima_peer-bank2.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank2.dejima-swarm-network"
       - "PEER_NETWORK_ADDRESS=dejima_peer-bank6.dejima-swarm-network"
     deploy:
       replicas: 1
@@ -107,7 +107,7 @@ services:
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
       - "PEER_TYPE=bank"
       - "SHARE_GOV_BANK_PEERS=dejima_peer-gov5.dejima-swarm-network"
-      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank4.dejima-swarm-network"
       - "PEER_NETWORK_ADDRESS=dejima_peer-bank7.dejima-swarm-network"
     deploy:
       replicas: 1
@@ -123,7 +123,7 @@ services:
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
       - "PEER_TYPE=bank"
       - "SHARE_GOV_BANK_PEERS=dejima_peer-gov5.dejima-swarm-network"
-      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-insurance6.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank7.dejima-swarm-network"
       - "PEER_NETWORK_ADDRESS=dejima_peer-bank8.dejima-swarm-network"
     deploy:
       replicas: 1
@@ -219,7 +219,7 @@ services:
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
       - "PEER_TYPE=insurance"
       - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-gov.dejima-swarm-network"
-      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank4.dejima-swarm-network"
       - "PEER_NETWORK_ADDRESS=dejima_peer-insurance.dejima-swarm-network"
     deploy:
       replicas: 1
@@ -234,8 +234,8 @@ services:
       - "RAILS_LOG_TO_STDOUT=true"
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
       - "PEER_TYPE=insurance"
-      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-insurance.dejima-swarm-network"
-      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank.dejima-swarm-network"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-gov3.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank5.dejima-swarm-network"
       - "PEER_NETWORK_ADDRESS=dejima_peer-insurance2.dejima-swarm-network"
     deploy:
       replicas: 1
@@ -266,7 +266,7 @@ services:
       - "RAILS_LOG_TO_STDOUT=true"
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
       - "PEER_TYPE=insurance"
-      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-gov4.dejima-swarm-network"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-gov2.dejima-swarm-network"
       - "SHARE_RISK_FACTOR_PEERS=dejima_peer-insurance5.dejima-swarm-network"
       - "PEER_NETWORK_ADDRESS=dejima_peer-insurance4.dejima-swarm-network"
     deploy:
@@ -299,7 +299,7 @@ services:
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
       - "PEER_TYPE=insurance"
       - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-gov5.dejima-swarm-network"
-      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-insurance4.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-insurance7.dejima-swarm-network"
       - "PEER_NETWORK_ADDRESS=dejima_peer-insurance6.dejima-swarm-network"
     deploy:
       replicas: 1
@@ -314,8 +314,8 @@ services:
       - "RAILS_LOG_TO_STDOUT=true"
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
       - "PEER_TYPE=insurance"
-      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-insurance6.dejima-swarm-network"
-      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank7.dejima-swarm-network"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-gov5.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-insurance6.dejima-swarm-network"
       - "PEER_NETWORK_ADDRESS=dejima_peer-insurance7.dejima-swarm-network"
     deploy:
       replicas: 1

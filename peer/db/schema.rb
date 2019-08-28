@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_15_202825) do
+ActiveRecord::Schema.define(version: 2019_08_28_115316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,21 @@ ActiveRecord::Schema.define(version: 2019_07_15_202825) do
     t.string "phone"
     t.string "address"
     t.date "birthdate"
+  end
+
+  create_table "metrics", force: :cascade do |t|
+    t.integer "messages_sent", default: 0
+    t.integer "messages_received", default: 0
+    t.datetime "detection_started"
+    t.datetime "detection_finished"
+    t.integer "detection_time_elapsed"
+    t.datetime "last_update_request_received"
+    t.integer "update_request_count", default: 0
+    t.integer "update_request_conflict_count", default: 0
+    t.datetime "last_broadcast"
+    t.integer "broadcast_count", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "peer_groups_stores", force: :cascade do |t|

@@ -7,27 +7,29 @@ class DejimaController < ApplicationController
   # respond to peer group detection
   # only available for config.prototype_role == :peer
   def detect
+    Metric.get_current.increment!(:messages_received)
     raise "Only peer role can run detection" unless Rails.application.config.prototype_role == :peer
-
-    # needs to be synchronized to avoid race conditions on
-    # multiple peers initilizing at the same time
-    # this mutex might be redundant, because we are running in single server mode and
-    # it probably would not work in multi-worker mode as it's not shared across processes,
-    # but it illustrates the concept
-    @mutex.synchronize do
-      Rails.logger.info "Responding to detection request"
-      remote_peer_groups = JSON.parse(params["peer_groups"], symbolize_names: true).map(&PeerGroup.method(:new))
-      render json: DejimaManager.compare_remote_peer_groups(remote_peer_groups)
-    end
+    Rails.logger.info "Responding to detection request"
+    remote_peer_groups = JSON.parse(params["peer_groups"], symbolize_names: true).map(&PeerGroup.method(:new))
+    render json: DejimaManager.compare_remote_peer_groups(remote_peer_groups)
   end
 
   # update config based on newer detection run of a peer
   # only available for config.prototype_role == :peer
-  def update_peers; end
+  def update_peer_groups
+    Metric.get_current.increment(:messages_received)
+    Metric.get_current.increment(:update_request_count)
+    Metric.get_current.update!(last_update_request_received: Time.now)
+    Rails.logger.info "Received peer group update"
+    new_peer_groups = JSON.parse(params["peer_groups"], symbolize_names: true).map(&PeerGroup.method(:new))
+    DejimaManager.add_remote_peer_groups(new_peer_groups)
+    render json: "success"
+  end
 
   # only available for config.prototype_role == :peer
+  # this api endpoint is used by the database
   def propagate
-    params.permit! # permit all, this api endpoint is used by the database
+    params.permit!
     params_hash = params.to_h
     payload_hash = {}
     # Parameters: {"view"=>"public.dejima_bank", "insertion"=>[{"first_name"=>"John", "last_name"=>"Doe", "phone"=>nil, "address"=>nil}], "deletion"=>[]}

@@ -54,7 +54,6 @@ module PeerGroups
       # remove attributes that moved to the new union group from existing group
       # unless the union group and existing group are identical
       next unless peer_group.dejima_tables != dejima_table_union
-
       updated_group = PeerGroup.new(
         dejima_tables: peer_group.dejima_tables,
         attributes: (peer_group.attributes - shared_attributes), # shared "moved up" to the union group
@@ -63,7 +62,6 @@ module PeerGroups
       if updated_group.attributes.empty?
         peer_groups.delete(peer_group.dejima_tables)
       else
-        updated_group.update_peers(new_group)
         peer_groups[peer_group.dejima_tables] = updated_group
       end
     end

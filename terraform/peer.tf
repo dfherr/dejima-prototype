@@ -118,7 +118,7 @@ resource "google_compute_instance_from_template" "dejima_peer_gov5" {
 }
 resource "google_compute_instance_from_template" "dejima_peer_insurance" {
   name = "dejima-peer-insurance"
-  zone               = "${var.peer_zone2}"
+  zone               = "${var.peer_zone1}"
 
   source_instance_template = "${google_compute_instance_template.dejima_peer_template.self_link}"
 }

@@ -6,10 +6,12 @@ services:
     networks: ["dejima-swarm-network"]
     tty: true
     environment:
-      - "RAILS_ENV=peer_development"
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
       - "PEER_TYPE=bank"
-      - "PEER_NETWORK_ADDRESS=dejima-peer-bank.dejima-swarm-network"
+      - "SHARE_GOV_BANK_PEERS=dejima_peer-gov.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-bank.dejima-swarm-network"
     deploy:
       replicas: 1
       placement:
@@ -19,14 +21,32 @@ services:
     networks: ["dejima-swarm-network"]
     tty: true
     environment:
-      - "RAILS_ENV=peer_development"
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
       - "PEER_TYPE=government"
-      - "PEER_NETWORK_ADDRESS=dejima-peer-gov.dejima-swarm-network"
+      - "SHARE_GOV_BANK_PEERS=dejima_peer-bank.dejima-swarm-network"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-insurance.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-gov.dejima-swarm-network"
     deploy:
       replicas: 1
       placement:
         constraints: [node.hostname==dejima-peer-gov]
+  peer-insurance:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=insurance"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-gov.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-insurance.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-insurance]
 networks:
   dejima-swarm-network:
     external: true

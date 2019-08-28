@@ -61,7 +61,7 @@ module DejimaManager
 
   # sends updated peer groups to all relevant peers
   def self.broadcast_peer_groups
-    Metric.get_current.increment(:broadcast_count)
+    Metric.get_current.increment!(:broadcast_count)
     Metric.get_current.update!(last_broadcast: Time.now)
     Rails.logger.info "Broadcasting new peer groups"
     peer_groups_per_peer = {}

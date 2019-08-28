@@ -16,7 +16,8 @@ test: &test
 production: &production
   <<: *default
   database: dejima_peer_prod
-  password: <%= ENV['DEJIMA_PEER_DATABASE_PASSWORD'] %>
+  # better way to set production pw
+  # password: <%= ENV['DEJIMA_PEER_DATABASE_PASSWORD'] %> 
 
 client_development:
   <<: *development
@@ -45,3 +46,4 @@ peer_test:
 peer_production:
   <<: *production
   username: dejima
+  password: barfoo

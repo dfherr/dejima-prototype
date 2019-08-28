@@ -82,11 +82,15 @@ Here is an overview of the most important files:
 
 * [app/controllers/dejima_controller.rb](peer/app/controllers/dejima_controller.rb) provides API endpoints reachable per http. It provides an endpoint for creating users for the clients and all communication endpoints for the peers.
 * [config/routes.rb](peer/config/routes.rb) configures the links between HTTP URLs and controller methods.
-* [app/libs/](peer/app/libs/) has the `dejima_proxy.rb` this is responsible for the outgoing requests to other peers and the `dejima_utils.rb`, which has the code for the dejima framework algorithms.
+* [app/libs/](peer/app/libs/) has the `dejima_proxy.rb` this is responsible for the outgoing requests to other peers and the `dejima_manager.rb`, which has the code for the dejima framework algorithms.
 * [app/models](peer/app/models/) has the ORM ckasses for the database access.
 * [db/migrate](peer/db/migrate/) has the code for creating database tables and other modifications. Only the tables for the configured `PEER_TYPE` will be created. These files will be run on startup and only applied once.
 * [lib/dejima_sql/](peer/lib/dejima_sql) has the plpgsql & plsh sql triggers from [Van Dang https://github.com/dangtv/BIRDS](https://github.com/dangtv/BIRDS)
 * [config/initializers/dejima_create_peer_groups.rb](peer/config/initializers/dejima_create_peer_groups.rb) initiates the peer group detection algorithm on startup.
+
+##  Cloud network testing
+
+The [terraform/](terraform/) and [stacks/](stacks/) folders hold configuration files for testing with Google Compuute VM instances. The amount of peers to create is defined in [terraform/peers.tf](terraform/peers.tf). Each peer is given is own unique name and network address. The [stacks/dejima-swarm.yml](stacks/dejima-swarm.yml) provides a Docker swarm configuration file for starting all peers with the given configuration from the manager instance. Copy these files to the manager instance (e.g. using `scp`) and then run `docker stack deploy --compose-file dejima-swarm.yml dejima`. For evaluation purposes we suggest booting the logging swarm before the dejima swarm that gather logs from all peers into an ELK stack. Make sure to wait until the logging swarm fully booted (check `docker service ls`) before starting the peers. Kibana is reachable on port 5601 of the manager instance.
 
 ## License
 

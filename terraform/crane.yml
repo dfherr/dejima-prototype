@@ -8,7 +8,7 @@ services:
     interactive: true
     tty: true
     environment:
-      - 'RAILS_ENV=peer_development'
+      - 'RAILS_ENV=peer_production'
       - 'PEER_TYPE=government'
       - 'PEER_NETWORK_ADDRESS=peer.dejima-swarm-network'
       - 'DEJIMA_PEER_DATABASE_HOST=postgres.peer-net'

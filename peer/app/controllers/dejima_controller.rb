@@ -17,8 +17,8 @@ class DejimaController < ApplicationController
   # update config based on newer detection run of a peer
   # only available for config.prototype_role == :peer
   def update_peer_groups
-    Metric.get_current.increment(:messages_received)
-    Metric.get_current.increment(:update_request_count)
+    Metric.get_current.increment!(:messages_received)
+    Metric.get_current.increment!(:update_request_count)
     Metric.get_current.update!(last_update_request_received: Time.now)
     Rails.logger.info "Received peer group update"
     new_peer_groups = JSON.parse(params["peer_groups"], symbolize_names: true).map(&PeerGroup.method(:new))

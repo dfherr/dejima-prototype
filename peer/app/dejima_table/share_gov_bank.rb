@@ -1,8 +1,8 @@
-class ShareWithInsurance
+class ShareGovBank
   include DejimaTable
 
   define_attribute  :first_name,
                     :last_name,
-                    :address,
-                    :birthdate
+                    :phone,
+                    :address
 end

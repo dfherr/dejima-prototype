@@ -22,6 +22,7 @@ services:
       - "RAILS_ENV=peer_development"
       - "PEER_TYPE=government"
       - "PEER_NETWORK_ADDRESS=dejima-gov-peer.dejima-net"
+      - "SHARE_GOV_BANK_PEERS=dejima-bank-peer.dejima-net"
       - "DEJIMA_PEER_DATABASE_HOST=dejima-gov-postgres.dejima-gov-peer-net"
     #detach: true
     interactive: true
@@ -57,6 +58,7 @@ services:
       - "RAILS_ENV=peer_development"
       - "PEER_TYPE=bank"
       - "PEER_NETWORK_ADDRESS=dejima-bank-peer.dejima-net"
+      - "SHARE_GOV_BANK_PEERS=dejima-gov-peer.dejima-net"
       - "DEJIMA_PEER_DATABASE_HOST=dejima-bank-postgres.dejima-bank-peer-net"
     #detach: true
     interactive: true
@@ -92,6 +94,7 @@ services:
       - "RAILS_ENV=peer_development"
       - "PEER_TYPE=insurance"
       - "PEER_NETWORK_ADDRESS=dejima-insurance-peer.dejima-net"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima-gov-peer.dejima-net"
       - "DEJIMA_PEER_DATABASE_HOST=dejima-insurance-postgres.dejima-insurance-peer-net"
     #detach: true
     interactive: true

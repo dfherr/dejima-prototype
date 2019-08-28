@@ -8,6 +8,7 @@ class CreateBankUsers < ActiveRecord::Migration[5.2]
       t.string :iban # not shared
       t.string :address  # shard with gov
       t.string :phone # not shared
+      t.string :credit_score # shared between banks
     end
   end
 end

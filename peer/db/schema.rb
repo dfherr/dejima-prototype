@@ -16,13 +16,12 @@ ActiveRecord::Schema.define(version: 2019_08_28_115316) do
   enable_extension "plpgsql"
   enable_extension "plsh"
 
-  create_table "bank_users", force: :cascade do |t|
+  create_table "government_users", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
-    t.string "iban"
-    t.string "address"
     t.string "phone"
-    t.string "risk_factor"
+    t.string "address"
+    t.date "birthdate"
   end
 
   create_table "metrics", force: :cascade do |t|
@@ -30,7 +29,7 @@ ActiveRecord::Schema.define(version: 2019_08_28_115316) do
     t.integer "messages_received", default: 0
     t.datetime "detection_started"
     t.datetime "detection_finished"
-    t.integer "detection_time_elapsed"
+    t.float "detection_time_elapsed"
     t.datetime "last_update_request_received"
     t.integer "update_request_count", default: 0
     t.integer "update_request_conflict_count", default: 0

@@ -5,7 +5,7 @@ class CreateMetrics < ActiveRecord::Migration[5.2]
       t.integer 'messages_received', default: 0
       t.datetime 'detection_started'
       t.datetime 'detection_finished'
-      t.integer 'detection_time_elapsed'
+      t.float 'detection_time_elapsed'
 
       t.datetime 'last_update_request_received'
       t.integer 'update_request_count', default: 0

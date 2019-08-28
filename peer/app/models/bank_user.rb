@@ -12,8 +12,8 @@ class BankUser < ApplicationRecord
       peers: ([Rails.application.config.peer_network_address] + Rails.application.config.share_gov_bank_peers).to_set 
     },
     { 
-      table: ShareBetweenBanks, 
-      peers: ([Rails.application.config.peer_network_address] + Rails.application.config.share_between_banks_peers).to_set 
+      table: ShareRiskFactor, 
+      peers: ([Rails.application.config.peer_network_address] + Rails.application.config.share_risk_factor_peers).to_set 
     }]
   end
 end

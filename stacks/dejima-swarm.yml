@@ -11,6 +11,7 @@ services:
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
       - "PEER_TYPE=bank"
       - "SHARE_GOV_BANK_PEERS=dejima_peer-gov.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-insurance.dejima-swarm-network"
       - "PEER_NETWORK_ADDRESS=dejima_peer-bank.dejima-swarm-network"
     deploy:
       replicas: 1
@@ -42,6 +43,7 @@ services:
       - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
       - "PEER_TYPE=insurance"
       - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-gov.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank.dejima-swarm-network"
       - "PEER_NETWORK_ADDRESS=dejima_peer-insurance.dejima-swarm-network"
     deploy:
       replicas: 1

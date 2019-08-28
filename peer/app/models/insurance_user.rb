@@ -10,6 +10,10 @@ class InsuranceUser < ApplicationRecord
     link_dejima_tables [{ 
       table: ShareGovInsurance, 
       peers: ([Rails.application.config.peer_network_address] + Rails.application.config.share_gov_insurance_peers).to_set 
+    },
+    { 
+      table: ShareRiskFactor, 
+      peers: ([Rails.application.config.peer_network_address] + Rails.application.config.share_risk_factor_peers).to_set 
     }]
   end
 end

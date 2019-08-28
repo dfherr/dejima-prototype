@@ -1,5 +1,5 @@
 variable "image_manager" {
-  default = "wise-vault-250911/dejima-prototype-1567001342"
+  default = "wise-vault-250911/dejima-prototype-1567007252"
 }
 
 variable "manager_instance_type" {
@@ -7,7 +7,7 @@ variable "manager_instance_type" {
 }
 
 variable "image_peer" {
-  default = "wise-vault-250911/dejima-prototype-1567001342"
+  default = "wise-vault-250911/dejima-prototype-1567007252"
 }
 
 variable "peer_instance_type" {

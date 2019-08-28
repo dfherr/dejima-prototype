@@ -1,6 +1,6 @@
 {
    "insurance":{
-      "detection_time_elapsed":1,
+      "detection_time_elapsed":1.074,
       "detection_started":"2019-08-28T17:47:00.414Z",
       "detection_finished":"2019-08-28T17:47:01.488Z",
       "messages_sent":4,
@@ -12,7 +12,7 @@
       "last_broadcast":"2019-08-28T17:47:00.970Z"
    },
    "government":{
-      "detection_time_elapsed":0,
+      "detection_time_elapsed":0.938,
       "detection_started":"2019-08-28T17:46:59.046Z",
       "detection_finished":"2019-08-28T17:46:59.984Z",
       "messages_sent":4,
@@ -24,7 +24,7 @@
       "last_broadcast":"2019-08-28T17:46:59.551Z"
    },
    "bank":{
-      "detection_time_elapsed":0,
+      "detection_time_elapsed":0.765,
       "detection_started":"2019-08-28T17:46:58.883Z",
       "detection_finished":"2019-08-28T17:46:59.648Z",
       "messages_sent":4,

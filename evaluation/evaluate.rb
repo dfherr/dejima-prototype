@@ -4,6 +4,7 @@ require 'time'
 
 raise StandardError.new("Please provide the test subdirectory") unless ARGV[0]
 test_dir = ARGV[0]
+include_types = ARGV[1]
 
 module Evaluate
 
@@ -242,35 +243,37 @@ peer_groups = {
 results = {}
 results[:correctness] = Evaluate.correct?(peer_groups)
 
+results[:average_detection_time] = Evaluate.average_detection_time_elapsed(metrics)
+results[:average_detection_time_per_type] = Evaluate.average_detection_time_elapsed_per_type(metrics) if include_types
+results[:average_time_elapsed] = Evaluate.average_time_elapsed(metrics)
+results[:average_time_elapsed_per_type] = Evaluate.average_time_elapsed_per_type(metrics) if include_types
+
 results[:total_messages_sent] = Evaluate.total_count(metrics, :messages_sent)
 results[:average_messages_sent] = Evaluate.average_count(metrics, :messages_sent)
-results[:total_messages_sent_per_type] = Evaluate.total_count_per_type(metrics, :messages_sent)
-results[:average_messages_sent_per_type] = Evaluate.total_count_per_type(metrics, :messages_sent)
+results[:total_messages_sent_per_type] = Evaluate.total_count_per_type(metrics, :messages_sent) if include_types
+results[:average_messages_sent_per_type] = Evaluate.total_count_per_type(metrics, :messages_sent) if include_types
 
 results[:total_messages_received] = Evaluate.total_count(metrics, :messages_received)
 results[:average_messages_received] = Evaluate.average_count(metrics, :messages_received)
-results[:total_messages_received_per_type] = Evaluate.total_count_per_type(metrics, :messages_received)
-results[:average_messages_received_per_type] = Evaluate.total_count_per_type(metrics, :messages_received)
+results[:total_messages_received_per_type] = Evaluate.total_count_per_type(metrics, :messages_received) if include_types
+results[:average_messages_received_per_type] = Evaluate.total_count_per_type(metrics, :messages_received) if include_types
 
 results[:total_broadcasts] = Evaluate.total_count(metrics, :broadcast_count)
 results[:average_broadcasts] = Evaluate.average_count(metrics, :broadcast_count)
-results[:total_broadcasts_per_type] = Evaluate.total_count_per_type(metrics, :broadcast_count)
-results[:average_broadcasts_per_type] = Evaluate.total_count_per_type(metrics, :broadcast_count)
+results[:total_broadcasts_per_type] = Evaluate.total_count_per_type(metrics, :broadcast_count) if include_types
+results[:average_broadcasts_per_type] = Evaluate.total_count_per_type(metrics, :broadcast_count) if include_types
 
 results[:total_update_requests] = Evaluate.total_count(metrics, :update_request_count)
 results[:average_update_requests] = Evaluate.average_count(metrics, :update_request_count)
-results[:total_update_requests_per_type] = Evaluate.total_count_per_type(metrics, :update_request_count)
-results[:average_update_requests_per_type] = Evaluate.total_count_per_type(metrics, :update_request_count)
+results[:total_update_requests_per_type] = Evaluate.total_count_per_type(metrics, :update_request_count) if include_types
+results[:average_update_requests_per_type] = Evaluate.total_count_per_type(metrics, :update_request_count) if include_types
 
 results[:total_update_request_conflicts] = Evaluate.total_count(metrics, :update_request_conflict_count)
 results[:average_update_request_conflicts] = Evaluate.average_count(metrics, :update_request_conflict_count)
-results[:total_update_request_conflicts_per_type] = Evaluate.total_count_per_type(metrics, :update_request_conflict_count)
-results[:average_update_request_conflicts_per_type] = Evaluate.total_count_per_type(metrics, :update_request_conflict_count)
+results[:total_update_request_conflicts_per_type] = Evaluate.total_count_per_type(metrics, :update_request_conflict_count) if include_types 
+results[:average_update_request_conflicts_per_type] = Evaluate.total_count_per_type(metrics, :update_request_conflict_count) if include_types
 
-results[:average_detection_time] = Evaluate.average_detection_time_elapsed(metrics)
-results[:average_detection_time_per_type] = Evaluate.average_detection_time_elapsed_per_type(metrics)
-results[:average_time_elapsed] = Evaluate.average_time_elapsed(metrics)
-results[:average_time_elapsed_per_type] = Evaluate.average_time_elapsed_per_type(metrics)
+
 
 File.open(File.expand_path("../#{test_dir}/evaluation_results.json",__FILE__), "w") do |f|
   f.puts JSON.pretty_generate(results)
@@ -279,45 +282,43 @@ end
 puts "Correct?: #{results[:correctness]}"
 puts "\n"
 
+puts "#### Time metrics ####"
+puts "Average detection time:\n #{results[:average_detection_time]}"
+puts "Average detection time per type:\n #{results[:average_detection_time_per_type]}" if include_types
+puts "Average time elapsed:\n #{results[:average_time_elapsed]}"
+puts "Average time elapsed per type:\n #{results[:average_time_elapsed_per_type]}" if include_types
+
 puts "#### messages sent ####"
 puts "Total messages sent:\n #{results[:total_messages_sent]}"
 puts "Average messages sent:\n #{results[:average_messages_sent]}"
-puts "Total messages sent per type:\n #{results[:total_messages_sent_per_type]}"
-puts "Average messages sent per type:\n #{results[:average_messages_sent_per_type]}"
+puts "Total messages sent per type:\n #{results[:total_messages_sent_per_type]}" if include_types
+puts "Average messages sent per type:\n #{results[:average_messages_sent_per_type]}" if include_types
 puts "\n"
 
 puts "#### messages received ####"
 puts "Total messages received:\n #{results[:total_messages_received]}"
 puts "Average messages received:\n #{results[:average_messages_received]}"
-puts "Total messages received per type:\n #{results[:total_messages_received_per_type]}"
-puts "Average messages received per type:\n #{results[:average_messages_received_per_type]}"
+puts "Total messages received per type:\n #{results[:total_messages_received_per_type]}" if include_types
+puts "Average messages received per type:\n #{results[:average_messages_received_per_type]}" if include_types
 puts "\n"
 
 puts "#### broadcasts ####"
 puts "Total broadcasts:\n #{results[:total_broadcasts]}"
 puts "Average broadcasts:\n #{results[:average_broadcasts]}"
-puts "Total broadcasts per type:\n #{results[:total_broadcasts_per_type]}"
-puts "Average broadcasts per type:\n #{results[:average_broadcasts_per_type]}"
+puts "Total broadcasts per type:\n #{results[:total_broadcasts_per_type]}" if include_types
+puts "Average broadcasts per type:\n #{results[:average_broadcasts_per_type]}" if include_types
 puts "\n"
 
 puts "#### update requests received ####"
 puts "Total update requests received:\n #{results[:total_update_requests]}"
 puts "Average update requests received:\n #{results[:average_update_requests]}"
-puts "Total update requests received per type:\n #{results[:total_update_requests_per_type]}"
-puts "Average update requests received per type:\n #{results[:average_update_requests_per_type]}"
+puts "Total update requests received per type:\n #{results[:total_update_requests_per_type]}" if include_types
+puts "Average update requests received per type:\n #{results[:average_update_requests_per_type]}" if include_types
 puts "\n"
 
 puts "#### update request conflicts received ####"
 puts "Total update request conflicts received:\n #{results[:total_update_request_conflicts]}"
 puts "Average update request conflicts received:\n #{results[:average_update_request_conflicts]}"
-puts "Total update request conflicts received per type:\n #{results[:total_update_request_conflicts_per_type]}"
-puts "Average update request conflicts received per type:\n #{results[:average_update_request_conflicts_per_type]}"
+puts "Total update request conflicts received per type:\n #{results[:total_update_request_conflicts_per_type]}" if include_types
+puts "Average update request conflicts received per type:\n #{results[:average_update_request_conflicts_per_type]}" if include_types
 puts "\n"
-
-
-puts "#### Time metrics ####"
-puts "Average detection time:\n #{results[:average_detection_time]}"
-puts "Average detection time per type:\n #{results[:average_detection_time_per_type]}"
-puts "Average time elapsed:\n #{results[:average_time_elapsed]}"
-puts "Average time elapsed per type:\n #{results[:average_time_elapsed_per_type]}"
-

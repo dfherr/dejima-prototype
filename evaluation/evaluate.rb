@@ -15,13 +15,13 @@ module Evaluate
   end
   
   
-  def self.total_messages_sent(metrics)
+  def self.total_count(metrics, key)
     messages = {}
     messages[:avg] = 0
     metrics.each do |run, metric|
       messages[run] = 0
       metric.each_value do |peer|
-        messages[run] += peer[:messages_sent]
+        messages[run] += peer[key]
       end
       messages[:avg] += messages[run]
     end
@@ -29,13 +29,13 @@ module Evaluate
     messages
   end
 
-  def self.average_messages_sent(metrics)
+  def self.average_count(metrics, key)
     messages = {}
     messages[:avg] = 0
     metrics.each do |run, metric|
       messages[run] = 0
       metric.each_value do |peer|
-        messages[run] += peer[:messages_sent]
+        messages[run] += peer[key]
       end
       messages[run] = messages[run] * 1.0 / metric.keys.count
       messages[:avg] += messages[run]
@@ -44,36 +44,7 @@ module Evaluate
     messages  
   end
   
-  def self.total_messages_received(metrics)
-    messages = {}
-    messages[:avg] = 0
-    metrics.each do |run, metric|
-      messages[run] = 0
-      metric.each_value do |peer|
-        messages[run] += peer[:messages_received]
-      end
-      messages[:avg] += messages[run]
-    end
-    messages[:avg] = messages[:avg] * 1.0 / metrics.keys.count
-    messages  
-  end
-  
-  def self.average_messages_received(metrics)
-    messages = {}
-    messages[:avg] = 0
-    metrics.each do |run, metric|
-      messages[run] = 0
-      metric.each_value do |peer|
-        messages[run] += peer[:messages_received]
-      end
-      messages[run] = messages[run] * 1.0 / metric.keys.count
-      messages[:avg] += messages[run]
-    end
-    messages[:avg] = messages[:avg] * 1.0 / metrics.keys.count
-    messages  
-  end
-  
-  def self.total_messages_sent_per_type(metrics)
+  def self.total_count_per_type(metrics, key)
     messages = {}
     messages[:avg] = {
       insurance: 0,
@@ -84,7 +55,7 @@ module Evaluate
       messages[run] = {}
       metric.each do |instance, peer|
         messages[run][get_type(instance)] ||= 0
-        messages[run][get_type(instance)] += peer[:messages_sent]
+        messages[run][get_type(instance)] += peer[key]
       end
       messages[:avg][:government] += messages[run][:government] * 1.0
       messages[:avg][:bank] += messages[run][:bank] * 1.0
@@ -96,7 +67,7 @@ module Evaluate
     messages
   end
 
-  def self.average_messages_sent_per_type(metrics)
+  def self.average_count_per_type(metrics, key)
     messages = {}
     messages[:avg] = {
       insurance: 0,
@@ -115,66 +86,7 @@ module Evaluate
       messages[run] = {}
       metric.each do |instance, peer|
         messages[run][get_type(instance)] ||= 0
-        messages[run][get_type(instance)] += peer[:messages_sent]
-      end
-      # average run
-      messages[run][:government] = messages[run][:government]  * 1.0 / type_count[:government]
-      messages[run][:bank] = messages[run][:bank] * 1.0 / type_count[:bank]
-      messages[run][:insurance] = messages[run][:insurance] * 1.0 / type_count[:insurance]
-      # add tot toal average
-      messages[:avg][:government] += messages[run][:government] * 1.0
-      messages[:avg][:bank] += messages[run][:bank] * 1.0
-      messages[:avg][:insurance] += messages[run][:insurance] * 1.0
-    end
-    messages[:avg][:government] = messages[:avg][:government] * 1.0 / metrics.keys.count
-    messages[:avg][:bank] = messages[:avg][:bank] * 1.0 / metrics.keys.count
-    messages[:avg][:insurance] = messages[:avg][:insurance] * 1.0 / metrics.keys.count
-    messages
-  end
-  
-  def self.total_messages_received_per_type(metrics)
-    messages = {}
-    messages[:avg] = {
-      insurance: 0,
-      government: 0,
-      bank: 0
-    }
-    metrics.each do |run, metric|
-      messages[run] = {}
-      metric.each do |instance, peer|
-        messages[run][get_type(instance)] ||= 0
-        messages[run][get_type(instance)] += peer[:messages_received]
-      end
-      messages[:avg][:government] += messages[run][:government] * 1.0
-      messages[:avg][:bank] += messages[run][:bank] * 1.0
-      messages[:avg][:insurance] += messages[run][:insurance] * 1.0
-    end
-    messages[:avg][:government] = messages[:avg][:government] * 1.0 / metrics.keys.count
-    messages[:avg][:bank] = messages[:avg][:bank] * 1.0 / metrics.keys.count
-    messages[:avg][:insurance] = messages[:avg][:insurance] * 1.0 / metrics.keys.count
-    messages
-  end
-
-  def self.average_messages_received_per_type(metrics)
-    messages = {}
-    messages[:avg] = {
-      insurance: 0,
-      government: 0,
-      bank: 0
-    }
-    type_count = {
-      insurance: 0,
-      government: 0,
-      bank: 0      
-    }
-    metrics[:run1].each_key do |instance|
-      type_count[get_type(instance)] += 1
-    end
-    metrics.each do |run, metric|
-      messages[run] = {}
-      metric.each do |instance, peer|
-        messages[run][get_type(instance)] ||= 0
-        messages[run][get_type(instance)] += peer[:messages_received]
+        messages[run][get_type(instance)] += peer[key]
       end
       # average run
       messages[run][:government] = messages[run][:government]  * 1.0 / type_count[:government]
@@ -326,19 +238,47 @@ peer_groups = {
   run3: JSON.parse(File.read(File.expand_path("../#{test_dir}/run3/peer_groups.json",__FILE__)), symbolize_names: true)
 }
 
-puts "Correct?: #{Evaluate.correct?(peer_groups)}"
-puts "Total messages sent: #{Evaluate.total_messages_sent(metrics)}"
-puts "Average messages sent: #{Evaluate.average_messages_sent(metrics)}"
-puts "Total messages received: #{Evaluate.total_messages_received(metrics)}"
-puts "Average messages received: #{Evaluate.average_messages_received(metrics)}"
-puts "Average messages received: #{Evaluate.average_messages_received(metrics)}"
-puts "Average messages received: #{Evaluate.average_messages_received(metrics)}"
-puts "Total messages sent per type: #{Evaluate.total_messages_sent_per_type(metrics)}"
-puts "Average messages sent per type: #{Evaluate.average_messages_sent_per_type(metrics)}"
-puts "Total messages received per type: #{Evaluate.total_messages_received_per_type(metrics)}"
-puts "Average messages received per type: #{Evaluate.average_messages_received_per_type(metrics)}"
 
-puts "Average detection time: #{Evaluate.average_detection_time_elapsed(metrics)}"
-puts "Average detection time per type: #{Evaluate.average_detection_time_elapsed_per_type(metrics)}"
-puts "Average time elapsed: #{Evaluate.average_time_elapsed(metrics)}"
-puts "Average time elapsed per type: #{Evaluate.average_time_elapsed_per_type(metrics)}"
+puts "Correct?: #{Evaluate.correct?(peer_groups)}"
+puts "\n"
+
+puts "#### messages sent ####"
+puts "Total messages sent:\n #{Evaluate.total_count(metrics, :messages_sent)}"
+puts "Average messages sent:\n #{Evaluate.average_count(metrics, :messages_sent)}"
+puts "Total messages sent per type:\n #{Evaluate.total_count_per_type(metrics, :messages_sent)}"
+puts "Average messages sent per type:\n #{Evaluate.average_count_per_type(metrics, :messages_sent)}"
+puts "\n"
+
+puts "#### messages received ####"
+puts "Total messages received:\n #{Evaluate.total_count(metrics, :messages_received)}"
+puts "Average messages received:\n #{Evaluate.average_count(metrics, :messages_received)}"
+puts "Total messages received per type:\n #{Evaluate.total_count_per_type(metrics, :messages_received)}"
+puts "Average messages received per type:\n #{Evaluate.average_count_per_type(metrics, :messages_received)}"
+puts "\n"
+
+puts "#### broadcasts ####"
+puts "Total broadcasts:\n #{Evaluate.total_count(metrics, :broadcast_count)}"
+puts "Average broadcasts:\n #{Evaluate.average_count(metrics, :broadcast_count)}"
+puts "Total broadcasts per type:\n #{Evaluate.total_count_per_type(metrics, :broadcast_count)}"
+puts "Average broadcasts per type:\n #{Evaluate.average_count_per_type(metrics, :broadcast_count)}"
+puts "\n"
+
+puts "#### update requests received ####"
+puts "Total update requests received:\n #{Evaluate.total_count(metrics, :update_request_count)}"
+puts "Average update requests received:\n #{Evaluate.average_count(metrics, :update_request_count)}"
+puts "Total update requests received per type:\n #{Evaluate.total_count_per_type(metrics, :update_request_count)}"
+puts "Average update requests received per type:\n #{Evaluate.average_count_per_type(metrics, :update_request_count)}"
+puts "\n"
+
+puts "#### update request conflicts ####"
+puts "Total update request conflicts:\n #{Evaluate.total_count(metrics, :update_request_conflict_count)}"
+puts "Average update request conflicts:\n #{Evaluate.average_count(metrics, :update_request_conflict_count)}"
+puts "Total update request conflicts per type:\n #{Evaluate.total_count_per_type(metrics, :update_request_conflict_count)}"
+puts "Average update request conflicts per type:\n #{Evaluate.average_count_per_type(metrics, :update_request_conflict_count)}"
+puts "\n"
+
+puts "#### Time metrics ####"
+puts "Average detection time:\n #{Evaluate.average_detection_time_elapsed(metrics)}"
+puts "Average detection time per type:\n #{Evaluate.average_detection_time_elapsed_per_type(metrics)}"
+puts "Average time elapsed:\n #{Evaluate.average_time_elapsed(metrics)}"
+puts "Average time elapsed per type:\n #{Evaluate.average_time_elapsed_per_type(metrics)}"

@@ -1,0 +1,75 @@
+{
+  "correctness": true,
+  "average_detection_time": {
+    "avg": 10.4407,
+    "run1": 10.721,
+    "run2": 10.355,
+    "run3": 10.246
+  },
+  "average_time_elapsed": {
+    "avg": 10.4407,
+    "run1": 10.721,
+    "run2": 10.355,
+    "run3": 10.246
+  },
+  "total_messages_sent": {
+    "avg": 38.0,
+    "run1": 38,
+    "run2": 38,
+    "run3": 38
+  },
+  "average_messages_sent": {
+    "avg": 38.0,
+    "run1": 38.0,
+    "run2": 38.0,
+    "run3": 38.0
+  },
+  "total_messages_received": {
+    "avg": 0.0,
+    "run1": 0,
+    "run2": 0,
+    "run3": 0
+  },
+  "average_messages_received": {
+    "avg": 0.0,
+    "run1": 0.0,
+    "run2": 0.0,
+    "run3": 0.0
+  },
+  "total_broadcasts": {
+    "avg": 1.0,
+    "run1": 1,
+    "run2": 1,
+    "run3": 1
+  },
+  "average_broadcasts": {
+    "avg": 1.0,
+    "run1": 1.0,
+    "run2": 1.0,
+    "run3": 1.0
+  },
+  "total_update_requests": {
+    "avg": 0.0,
+    "run1": 0,
+    "run2": 0,
+    "run3": 0
+  },
+  "average_update_requests": {
+    "avg": 0.0,
+    "run1": 0.0,
+    "run2": 0.0,
+    "run3": 0.0
+  },
+  "total_update_request_conflicts": {
+    "avg": 0.0,
+    "run1": 0,
+    "run2": 0,
+    "run3": 0
+  },
+  "average_update_request_conflicts": {
+    "avg": 0.0,
+    "run1": 0.0,
+    "run2": 0.0,
+    "run3": 0.0
+  }
+}

@@ -7,7 +7,7 @@ module DejimaProxy
     Metric.get_current.increment!(:messages_sent)
     Rails.logger.info("Sending peer group request. Peer: #{peer} Payload: #{peer_groups}")
     begin
-      Retriable.retriable(tries: 2) do
+      Retriable.retriable(tries: 4, base_interval: 2, multiplier: 2) do
         RestClient::Request.execute(method: :get, url: "#{peer}:3000/hello",
           timeout: 5) # quick check for unresponsive peer
       end

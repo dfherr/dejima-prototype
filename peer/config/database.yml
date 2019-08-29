@@ -3,7 +3,7 @@ default: &default
   encoding: unicode
   host: <%= ENV['DEJIMA_PEER_DATABASE_HOST'] || 'localhost' %>
   port: <%= (ENV['DEJIMA_PEER_DATABASE_PORT'] || 5432).to_i %>
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 10 } %>
 
 development: &development
   <<: *default

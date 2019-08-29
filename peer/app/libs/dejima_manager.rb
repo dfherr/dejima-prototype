@@ -89,11 +89,11 @@ module DejimaManager
     
     locally_known_peers = Set.new
     possible_conflict_groups.each do |peer_group|
-      locally_known_peers.union peer_group.peers
+      locally_known_peers = locally_known_peers.union peer_group.peers
     end
     remotely_known_peers = Set.new
     remote_peer_groups.each do |peer_group|
-      remotely_known_peers.union peer_group.peers
+      remotely_known_peers = remotely_known_peers.union peer_group.peers
     end
     conflict = !(locally_known_peers - remotely_known_peers).empty?
     
@@ -105,7 +105,7 @@ module DejimaManager
     # broadcast if we detected a conflict
     if conflict
       Rails.logger.info "Initiating broadcast to resolve conflicts."
-      Metric.get_current.increment!(update_request_conflict_count)
+      Metric.get_current.increment!(:update_request_conflict_count)
       broadcast_peer_groups
     end
 

@@ -97,19 +97,19 @@
       "bank": 4.0
     },
     "run1": {
-      "insurance": 4,
-      "government": 4,
-      "bank": 4
+      "insurance": 4.0,
+      "government": 4.0,
+      "bank": 4.0
     },
     "run2": {
-      "insurance": 4,
-      "government": 4,
-      "bank": 4
+      "insurance": 4.0,
+      "government": 4.0,
+      "bank": 4.0
     },
     "run3": {
-      "insurance": 4,
-      "government": 4,
-      "bank": 4
+      "insurance": 4.0,
+      "government": 4.0,
+      "bank": 4.0
     }
   },
   "total_messages_received": {
@@ -153,19 +153,19 @@
       "bank": 4.0
     },
     "run1": {
-      "insurance": 0,
-      "government": 2,
-      "bank": 4
+      "insurance": 0.0,
+      "government": 2.0,
+      "bank": 4.0
     },
     "run2": {
-      "insurance": 0,
-      "government": 3,
-      "bank": 4
+      "insurance": 0.0,
+      "government": 3.0,
+      "bank": 4.0
     },
     "run3": {
-      "insurance": 0,
-      "government": 2,
-      "bank": 4
+      "insurance": 0.0,
+      "government": 2.0,
+      "bank": 4.0
     }
   },
   "total_broadcasts": {
@@ -209,19 +209,19 @@
       "bank": 1.0
     },
     "run1": {
-      "insurance": 1,
-      "government": 1,
-      "bank": 1
+      "insurance": 1.0,
+      "government": 1.0,
+      "bank": 1.0
     },
     "run2": {
-      "insurance": 1,
-      "government": 1,
-      "bank": 1
+      "insurance": 1.0,
+      "government": 1.0,
+      "bank": 1.0
     },
     "run3": {
-      "insurance": 1,
-      "government": 1,
-      "bank": 1
+      "insurance": 1.0,
+      "government": 1.0,
+      "bank": 1.0
     }
   },
   "total_update_requests": {
@@ -265,19 +265,19 @@
       "bank": 2.0
     },
     "run1": {
-      "insurance": 0,
-      "government": 1,
-      "bank": 2
+      "insurance": 0.0,
+      "government": 1.0,
+      "bank": 2.0
     },
     "run2": {
-      "insurance": 0,
-      "government": 2,
-      "bank": 2
+      "insurance": 0.0,
+      "government": 2.0,
+      "bank": 2.0
     },
     "run3": {
-      "insurance": 0,
-      "government": 1,
-      "bank": 2
+      "insurance": 0.0,
+      "government": 1.0,
+      "bank": 2.0
     }
   },
   "total_update_request_conflicts": {
@@ -321,19 +321,19 @@
       "bank": 0.0
     },
     "run1": {
-      "insurance": 0,
-      "government": 0,
-      "bank": 0
+      "insurance": 0.0,
+      "government": 0.0,
+      "bank": 0.0
     },
     "run2": {
-      "insurance": 0,
-      "government": 0,
-      "bank": 0
+      "insurance": 0.0,
+      "government": 0.0,
+      "bank": 0.0
     },
     "run3": {
-      "insurance": 0,
-      "government": 0,
-      "bank": 0
+      "insurance": 0.0,
+      "government": 0.0,
+      "bank": 0.0
     }
   }
 }

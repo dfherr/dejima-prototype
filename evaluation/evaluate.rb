@@ -269,27 +269,27 @@ results[:average_time_elapsed_per_type] = Evaluate.average_time_elapsed_per_type
 results[:total_messages_sent] = Evaluate.total_count(metrics, :messages_sent)
 results[:average_messages_sent] = Evaluate.average_count(metrics, :messages_sent)
 results[:total_messages_sent_per_type] = Evaluate.total_count_per_type(metrics, :messages_sent) if include_types
-results[:average_messages_sent_per_type] = Evaluate.total_count_per_type(metrics, :messages_sent) if include_types
+results[:average_messages_sent_per_type] = Evaluate.average_count_per_type(metrics, :messages_sent) if include_types
 
 results[:total_messages_received] = Evaluate.total_count(metrics, :messages_received)
 results[:average_messages_received] = Evaluate.average_count(metrics, :messages_received)
 results[:total_messages_received_per_type] = Evaluate.total_count_per_type(metrics, :messages_received) if include_types
-results[:average_messages_received_per_type] = Evaluate.total_count_per_type(metrics, :messages_received) if include_types
+results[:average_messages_received_per_type] = Evaluate.average_count_per_type(metrics, :messages_received) if include_types
 
 results[:total_broadcasts] = Evaluate.total_count(metrics, :broadcast_count)
 results[:average_broadcasts] = Evaluate.average_count(metrics, :broadcast_count)
 results[:total_broadcasts_per_type] = Evaluate.total_count_per_type(metrics, :broadcast_count) if include_types
-results[:average_broadcasts_per_type] = Evaluate.total_count_per_type(metrics, :broadcast_count) if include_types
+results[:average_broadcasts_per_type] = Evaluate.average_count_per_type(metrics, :broadcast_count) if include_types
 
 results[:total_update_requests] = Evaluate.total_count(metrics, :update_request_count)
 results[:average_update_requests] = Evaluate.average_count(metrics, :update_request_count)
 results[:total_update_requests_per_type] = Evaluate.total_count_per_type(metrics, :update_request_count) if include_types
-results[:average_update_requests_per_type] = Evaluate.total_count_per_type(metrics, :update_request_count) if include_types
+results[:average_update_requests_per_type] = Evaluate.average_count_per_type(metrics, :update_request_count) if include_types
 
 results[:total_update_request_conflicts] = Evaluate.total_count(metrics, :update_request_conflict_count)
 results[:average_update_request_conflicts] = Evaluate.average_count(metrics, :update_request_conflict_count)
 results[:total_update_request_conflicts_per_type] = Evaluate.total_count_per_type(metrics, :update_request_conflict_count) if include_types 
-results[:average_update_request_conflicts_per_type] = Evaluate.total_count_per_type(metrics, :update_request_conflict_count) if include_types
+results[:average_update_request_conflicts_per_type] = Evaluate.average_count_per_type(metrics, :update_request_conflict_count) if include_types
 
 
 

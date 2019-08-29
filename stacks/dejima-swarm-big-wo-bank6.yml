@@ -1,0 +1,310 @@
+version: '3'
+
+services:
+  peer-bank:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=bank"
+      - "SHARE_GOV_BANK_PEERS=dejima_peer-gov.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-insurance.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-bank.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-bank]
+  peer-bank2:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=bank"
+      - "SHARE_GOV_BANK_PEERS=dejima_peer-gov.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-bank2.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-bank2]
+  peer-bank3:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=bank"
+      - "SHARE_GOV_BANK_PEERS=dejima_peer-bank2.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank2.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-bank3.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-bank3]
+  peer-bank4:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=bank"
+      - "SHARE_GOV_BANK_PEERS=dejima_peer-gov2.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank8.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-bank4.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-bank4]
+  peer-bank5:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=bank"
+      - "SHARE_GOV_BANK_PEERS=dejima_peer-bank2.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank2.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-bank5.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-bank5] 
+  peer-bank7:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=bank"
+      - "SHARE_GOV_BANK_PEERS=dejima_peer-gov5.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank4.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-bank7.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-bank7]
+  peer-bank8:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=bank"
+      - "SHARE_GOV_BANK_PEERS=dejima_peer-gov5.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank7.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-bank8.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-bank8] 
+  peer-gov:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=government"
+      - "SHARE_GOV_BANK_PEERS=dejima_peer-gov3.dejima-swarm-network"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-gov3.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-gov.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-gov]
+  peer-gov2:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=government"
+      - "SHARE_GOV_BANK_PEERS=dejima_peer-gov.dejima-swarm-network"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-gov.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-gov2.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-gov2]
+  peer-gov3:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=government"
+      - "SHARE_GOV_BANK_PEERS=dejima_peer-gov.dejima-swarm-network"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-gov.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-gov3.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-gov3]
+  peer-gov4:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=government"
+      - "SHARE_GOV_BANK_PEERS=dejima_peer-bank7.dejima-swarm-network"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-insurance6.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-gov4.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-gov4]
+  peer-gov5:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=government"
+      - "SHARE_GOV_BANK_PEERS=dejima_peer-bank8.dejima-swarm-network"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-insurance5.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-gov5.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-gov5]
+  peer-insurance:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=insurance"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-gov.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank4.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-insurance.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-insurance]
+  peer-insurance2:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=insurance"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-gov3.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-bank5.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-insurance2.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-insurance2]
+  peer-insurance3:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=insurance"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-insurance2.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-insurance2.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-insurance3.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-insurance3]
+  peer-insurance4:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=insurance"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-gov2.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-insurance5.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-insurance4.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-insurance4]
+  peer-insurance5:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=insurance"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-gov4.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-insurance4.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-insurance5.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-insurance5]
+  peer-insurance6:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=insurance"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-gov5.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-insurance7.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-insurance6.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-insurance6]
+  peer-insurance7:
+    image: "dfherr/dejima-prototype:latest"
+    networks: ["dejima-swarm-network"]
+    tty: true
+    environment:
+      - "RAILS_ENV=peer_production"
+      - "RAILS_LOG_TO_STDOUT=true"
+      - "DEJIMA_PEER_DATABASE_HOST=172.17.0.1"
+      - "PEER_TYPE=insurance"
+      - "SHARE_GOV_INSURANCE_PEERS=dejima_peer-gov5.dejima-swarm-network"
+      - "SHARE_RISK_FACTOR_PEERS=dejima_peer-insurance6.dejima-swarm-network"
+      - "PEER_NETWORK_ADDRESS=dejima_peer-insurance7.dejima-swarm-network"
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.hostname==dejima-peer-insurance7]
+networks:
+  dejima-swarm-network:
+    external: true

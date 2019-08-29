@@ -9,6 +9,11 @@ include_types = ARGV[1]
 module Evaluate
 
   def self.correct?(peer_groups)
+    peer_groups.each_value do |inner_peer_groups|
+      inner_peer_groups.each_value do |peer_group|
+        peer_group.each{|p| p[:peers].sort!}
+      end
+    end
     return false if peer_groups[:fixture] != peer_groups[:run1]
     return false if peer_groups[:fixture] != peer_groups[:run2]
     return false if peer_groups[:fixture] != peer_groups[:run3]

@@ -8,8 +8,9 @@
            "risk_factor"
         ],
         "peers":[
-           "dejima_peer-insurance.dejima-swarm-network",
-           "dejima_peer-bank.dejima-swarm-network"
+           "dejima_peer-bank.dejima-swarm-network",
+           "dejima_peer-insurance.dejima-swarm-network"
+           
         ]
      },
      {
@@ -20,8 +21,8 @@
            "birthdate"
         ],
         "peers":[
-           "dejima_peer-insurance.dejima-swarm-network",
-           "dejima_peer-gov.dejima-swarm-network"
+           "dejima_peer-gov.dejima-swarm-network",
+           "dejima_peer-insurance.dejima-swarm-network"
         ]
      },
      {
@@ -33,9 +34,9 @@
            "address"
         ],
         "peers":[
-           "dejima_peer-insurance.dejima-swarm-network",
+           "dejima_peer-bank.dejima-swarm-network",
            "dejima_peer-gov.dejima-swarm-network",
-           "dejima_peer-bank.dejima-swarm-network"
+           "dejima_peer-insurance.dejima-swarm-network"
         ]
      },
      {
@@ -49,9 +50,9 @@
            "last_name"
         ],
         "peers":[
-           "dejima_peer-insurance.dejima-swarm-network",
+           "dejima_peer-bank.dejima-swarm-network",
            "dejima_peer-gov.dejima-swarm-network",
-           "dejima_peer-bank.dejima-swarm-network"
+           "dejima_peer-insurance.dejima-swarm-network"
         ]
      }
   ],
@@ -64,8 +65,8 @@
            "phone"
         ],
         "peers":[
-           "dejima_peer-gov.dejima-swarm-network",
-           "dejima_peer-bank.dejima-swarm-network"
+           "dejima_peer-bank.dejima-swarm-network",
+           "dejima_peer-gov.dejima-swarm-network"
         ]
      },
      {
@@ -89,8 +90,8 @@
            "address"
         ],
         "peers":[
-           "dejima_peer-gov.dejima-swarm-network",
            "dejima_peer-bank.dejima-swarm-network",
+           "dejima_peer-gov.dejima-swarm-network",
            "dejima_peer-insurance.dejima-swarm-network"
         ]
      },
@@ -105,8 +106,8 @@
            "last_name"
         ],
         "peers":[
-           "dejima_peer-gov.dejima-swarm-network",
            "dejima_peer-bank.dejima-swarm-network",
+           "dejima_peer-gov.dejima-swarm-network",
            "dejima_peer-insurance.dejima-swarm-network"
         ]
      }

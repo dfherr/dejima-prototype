@@ -11,7 +11,7 @@ variable "image_peer" {
 }
 
 variable "peer_instance_type" {
-  default = "n1-standard-2"
+  default = "n1-standard-1"
 }
 
 variable "peer_zone1" {

@@ -1,0 +1,339 @@
+{
+  "correctness": true,
+  "total_messages_sent": {
+    "avg": 12.0,
+    "run1": 12,
+    "run2": 12,
+    "run3": 12
+  },
+  "average_messages_sent": {
+    "avg": 4.0,
+    "run1": 4.0,
+    "run2": 4.0,
+    "run3": 4.0
+  },
+  "total_messages_sent_per_type": {
+    "avg": {
+      "insurance": 4.0,
+      "government": 4.0,
+      "bank": 4.0
+    },
+    "run1": {
+      "insurance": 4,
+      "government": 4,
+      "bank": 4
+    },
+    "run2": {
+      "insurance": 4,
+      "government": 4,
+      "bank": 4
+    },
+    "run3": {
+      "insurance": 4,
+      "government": 4,
+      "bank": 4
+    }
+  },
+  "average_messages_sent_per_type": {
+    "avg": {
+      "insurance": 4.0,
+      "government": 4.0,
+      "bank": 4.0
+    },
+    "run1": {
+      "insurance": 4,
+      "government": 4,
+      "bank": 4
+    },
+    "run2": {
+      "insurance": 4,
+      "government": 4,
+      "bank": 4
+    },
+    "run3": {
+      "insurance": 4,
+      "government": 4,
+      "bank": 4
+    }
+  },
+  "total_messages_received": {
+    "avg": 6.3333,
+    "run1": 6,
+    "run2": 7,
+    "run3": 6
+  },
+  "average_messages_received": {
+    "avg": 2.1111,
+    "run1": 2.0,
+    "run2": 2.3333,
+    "run3": 2.0
+  },
+  "total_messages_received_per_type": {
+    "avg": {
+      "insurance": 0.0,
+      "government": 2.3333,
+      "bank": 4.0
+    },
+    "run1": {
+      "insurance": 0,
+      "government": 2,
+      "bank": 4
+    },
+    "run2": {
+      "insurance": 0,
+      "government": 3,
+      "bank": 4
+    },
+    "run3": {
+      "insurance": 0,
+      "government": 2,
+      "bank": 4
+    }
+  },
+  "average_messages_received_per_type": {
+    "avg": {
+      "insurance": 0.0,
+      "government": 2.3333,
+      "bank": 4.0
+    },
+    "run1": {
+      "insurance": 0,
+      "government": 2,
+      "bank": 4
+    },
+    "run2": {
+      "insurance": 0,
+      "government": 3,
+      "bank": 4
+    },
+    "run3": {
+      "insurance": 0,
+      "government": 2,
+      "bank": 4
+    }
+  },
+  "total_broadcasts": {
+    "avg": 3.0,
+    "run1": 3,
+    "run2": 3,
+    "run3": 3
+  },
+  "average_broadcasts": {
+    "avg": 1.0,
+    "run1": 1.0,
+    "run2": 1.0,
+    "run3": 1.0
+  },
+  "total_broadcasts_per_type": {
+    "avg": {
+      "insurance": 1.0,
+      "government": 1.0,
+      "bank": 1.0
+    },
+    "run1": {
+      "insurance": 1,
+      "government": 1,
+      "bank": 1
+    },
+    "run2": {
+      "insurance": 1,
+      "government": 1,
+      "bank": 1
+    },
+    "run3": {
+      "insurance": 1,
+      "government": 1,
+      "bank": 1
+    }
+  },
+  "average_broadcasts_per_type": {
+    "avg": {
+      "insurance": 1.0,
+      "government": 1.0,
+      "bank": 1.0
+    },
+    "run1": {
+      "insurance": 1,
+      "government": 1,
+      "bank": 1
+    },
+    "run2": {
+      "insurance": 1,
+      "government": 1,
+      "bank": 1
+    },
+    "run3": {
+      "insurance": 1,
+      "government": 1,
+      "bank": 1
+    }
+  },
+  "total_update_requests": {
+    "avg": 3.3333,
+    "run1": 3,
+    "run2": 4,
+    "run3": 3
+  },
+  "average_update_requests": {
+    "avg": 1.1111,
+    "run1": 1.0,
+    "run2": 1.3333,
+    "run3": 1.0
+  },
+  "total_update_requests_per_type": {
+    "avg": {
+      "insurance": 0.0,
+      "government": 1.3333,
+      "bank": 2.0
+    },
+    "run1": {
+      "insurance": 0,
+      "government": 1,
+      "bank": 2
+    },
+    "run2": {
+      "insurance": 0,
+      "government": 2,
+      "bank": 2
+    },
+    "run3": {
+      "insurance": 0,
+      "government": 1,
+      "bank": 2
+    }
+  },
+  "average_update_requests_per_type": {
+    "avg": {
+      "insurance": 0.0,
+      "government": 1.3333,
+      "bank": 2.0
+    },
+    "run1": {
+      "insurance": 0,
+      "government": 1,
+      "bank": 2
+    },
+    "run2": {
+      "insurance": 0,
+      "government": 2,
+      "bank": 2
+    },
+    "run3": {
+      "insurance": 0,
+      "government": 1,
+      "bank": 2
+    }
+  },
+  "total_update_request_conflicts": {
+    "avg": 0.0,
+    "run1": 0,
+    "run2": 0,
+    "run3": 0
+  },
+  "average_update_request_conflicts": {
+    "avg": 0.0,
+    "run1": 0.0,
+    "run2": 0.0,
+    "run3": 0.0
+  },
+  "total_update_request_conflicts_per_type": {
+    "avg": {
+      "insurance": 0.0,
+      "government": 0.0,
+      "bank": 0.0
+    },
+    "run1": {
+      "insurance": 0,
+      "government": 0,
+      "bank": 0
+    },
+    "run2": {
+      "insurance": 0,
+      "government": 0,
+      "bank": 0
+    },
+    "run3": {
+      "insurance": 0,
+      "government": 0,
+      "bank": 0
+    }
+  },
+  "average_update_request_conflicts_per_type": {
+    "avg": {
+      "insurance": 0.0,
+      "government": 0.0,
+      "bank": 0.0
+    },
+    "run1": {
+      "insurance": 0,
+      "government": 0,
+      "bank": 0
+    },
+    "run2": {
+      "insurance": 0,
+      "government": 0,
+      "bank": 0
+    },
+    "run3": {
+      "insurance": 0,
+      "government": 0,
+      "bank": 0
+    }
+  },
+  "average_detection_time": {
+    "avg": 0.9397,
+    "run1": 0.9277,
+    "run2": 0.9257,
+    "run3": 0.9657
+  },
+  "average_detection_time_per_type": {
+    "avg": {
+      "insurance": 1.0737,
+      "government": 0.9587,
+      "bank": 0.7867
+    },
+    "run1": {
+      "insurance": 1.041,
+      "government": 0.956,
+      "bank": 0.786
+    },
+    "run2": {
+      "insurance": 1.074,
+      "government": 0.938,
+      "bank": 0.765
+    },
+    "run3": {
+      "insurance": 1.106,
+      "government": 0.982,
+      "bank": 0.809
+    }
+  },
+  "average_time_elapsed": {
+    "avg": 1.7045,
+    "run1": 1.669,
+    "run2": 1.7253,
+    "run3": 1.7193
+  },
+  "average_time_elapsed_per_type": {
+    "avg": {
+      "insurance": 0.575,
+      "government": 2.113,
+      "bank": 2.4257
+    },
+    "run1": {
+      "insurance": 0.552,
+      "government": 2.01,
+      "bank": 2.445
+    },
+    "run2": {
+      "insurance": 0.556,
+      "government": 2.369,
+      "bank": 2.251
+    },
+    "run3": {
+      "insurance": 0.617,
+      "government": 1.96,
+      "bank": 2.581
+    }
+  }
+}

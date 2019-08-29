@@ -90,7 +90,7 @@ Here is an overview of the most important files:
 
 ##  Cloud network testing
 
-The [terraform/](terraform/) and [stacks/](stacks/) folders hold configuration files for testing with Google Compuute VM instances. The amount of peers to create is defined in [terraform/peers.tf](terraform/peers.tf). Each peer is given is own unique name and network address. The [stacks/dejima-swarm.yml](stacks/dejima-swarm.yml) provides a Docker swarm configuration file for starting all peers with the given configuration from the manager instance. Copy these files to the manager instance (e.g. using `scp`) and then run:
+The [terraform/](terraform/) and [stacks/](stacks/) folders hold configuration files for testing with Google Compuute VM instances. The amount of peers to create is defined in [terraform/peers.tf](terraform/peers.tf). Each peer is given its own unique name and network address. The [stacks/dejima-swarm.yml](stacks/dejima-swarm.yml) provides a Docker swarm configuration file for starting all peers with the given configuration from the manager instance. Copy these files to the manager instance (e.g. using `scp`) and then run:
 ```
 docker stack deploy --compose-file dejima-swarm.yml dejima
 ```

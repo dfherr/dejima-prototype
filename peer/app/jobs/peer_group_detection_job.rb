@@ -5,7 +5,9 @@ class PeerGroupDetectionJob < ApplicationJob
     Metric.create do |m|
       m.detection_started = Time.now
     end
+    PeerGroupsStore.get.update!(detection_running: true)
     DejimaManager.detect_peer_groups
+    PeerGroupsStore.get.update!(detection_running: false)
     Metric.get_current.update!(detection_finished: Time.now)
     time_elapsed = Metric.get_current.detection_finished - Metric.get_current.detection_started
     Rails.logger.info("Detection time elapsed: #{time_elapsed}")

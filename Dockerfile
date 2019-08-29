@@ -36,11 +36,11 @@ ENV TZ Europe/Berlin
 ADD docker-bin/start_peer /usr/local/bin/start_peer
 RUN chmod 0755 /usr/local/bin/start_peer
 
+COPY --from=ruby_builder /usr/local/bundle /usr/local/bundle
+
 WORKDIR /peer
 
 ADD peer /peer
-
-COPY --from=ruby_builder /usr/local/bundle /usr/local/bundle
 
 EXPOSE 3000
 

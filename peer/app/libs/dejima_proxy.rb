@@ -30,12 +30,13 @@ module DejimaProxy
     Metric.get_current.increment!(:messages_sent)
     Rails.logger.info("Sending peer group update. Peer: #{peer} Payload: #{peer_groups}")
     begin
-      Retriable.retriable(tries: 2) do
-        RestClient::Request.execute(method: :get, url: "#{peer}:3000/hello",
-          timeout: 5) # quick check for unresponsive peer
+      Retriable.retriable(tries: 5, base_interval: 3, multiplier: 2) do
+        response = RestClient::Request.execute(method: :post,
+          url: "#{peer}:3000/dejima/update_peer_groups", 
+          payload: {peer_groups: peer_groups.to_json},
+          timeout: 5)
+        Rails.logger.info "Peer #{peer} responded: #{response}"
       end
-      response = RestClient.post("#{peer}:3000/dejima/update_peer_groups", peer_groups: peer_groups.to_json)
-      Rails.logger.info "Peer #{peer} responded: #{response}"
     rescue RestClient::ExceptionWithResponse => e
       Rails.logger.warn "RestClient error for peer #{peer}: #{e}"
       "connection_error"

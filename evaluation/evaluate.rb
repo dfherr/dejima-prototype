@@ -246,6 +246,18 @@ peer_groups = {
   run3: JSON.parse(File.read(File.expand_path("../#{test_dir}/run3/peer_groups.json",__FILE__)), symbolize_names: true)
 }
 
+# for debugging:
+# peer_groups.each_value do |inner_peer_groups|
+#   inner_peer_groups.each_value do |peer_group|
+#     peer_group.each{|p| p[:peers].sort!}
+#   end
+# end
+
+# File.open(File.expand_path("../#{test_dir}/evaluation_sorted_peer_groups.json",__FILE__), "w") do |f|
+#   f.puts JSON.pretty_generate(peer_groups[:run1])
+# end
+
+
 results = {}
 results[:correctness] = Evaluate.correct?(peer_groups)
 

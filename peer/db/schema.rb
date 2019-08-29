@@ -10,18 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_28_115316) do
+ActiveRecord::Schema.define(version: 2019_08_29_202556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "plsh"
 
-  create_table "government_users", force: :cascade do |t|
+  create_table "bank_users", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
-    t.string "phone"
+    t.string "iban"
     t.string "address"
-    t.date "birthdate"
+    t.string "phone"
+    t.string "risk_factor"
   end
 
   create_table "metrics", force: :cascade do |t|
@@ -44,6 +45,7 @@ ActiveRecord::Schema.define(version: 2019_08_28_115316) do
     t.boolean "singleton", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "detection_running"
     t.index ["singleton"], name: "index_peer_groups_stores_on_singleton", unique: true
   end
 

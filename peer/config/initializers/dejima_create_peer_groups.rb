@@ -5,6 +5,6 @@ Rails.application.config.after_initialize do
     DejimaManager.create_peer_groups(GovernmentUser) if Rails.application.config.dejima_peer_type == :government
     DejimaManager.create_peer_groups(BankUser) if Rails.application.config.dejima_peer_type == :bank
     DejimaManager.create_peer_groups(InsuranceUser) if Rails.application.config.dejima_peer_type == :insurance
-    PeerGroupDetectionJob.set(wait: 2.seconds).perform_later
+    PeerGroupDetectionJob.set(wait: 15.seconds).perform_later
   end
 end

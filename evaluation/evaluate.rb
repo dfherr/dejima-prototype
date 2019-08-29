@@ -165,11 +165,11 @@ module Evaluate
     metrics.each do |run, metric|
       detection_time[run] = 0
       metric.each_value do |peer|
-        # one of both is always not null
-        last_broadcast = Time.parse(peer[:last_broadcast] || "2018-01-01T00:00:00")
-        last_update_request_received = Time.parse(peer[:last_update_request_received] || "2018-01-01T00:00:00")
-        time_finished = last_broadcast > last_update_request_received ? last_broadcast : last_update_request_received
-        time_elapsed =  time_finished - Time.parse(peer[:detection_started])
+        finish_times = []
+        finish_times << Time.parse(peer[:last_broadcast] || "2018-01-01T00:00:00")
+        finish_times << Time.parse(peer[:last_update_request_received] || "2018-01-01T00:00:00")
+        finish_times << Time.parse(peer[:detection_finished] || "2018-01-01T00:00:00")
+        time_elapsed =  finish_times.max - Time.parse(peer[:detection_started])
         detection_time[run] += time_elapsed
       end
       detection_time[run] = (detection_time[run] * 1.0 / metric.keys.count).round(4)
@@ -198,10 +198,11 @@ module Evaluate
       detection_time[run] = {}
       metric.each do |instance, peer|
         # one of both is always not null
-        last_broadcast = Time.parse(peer[:last_broadcast] || "2018-01-01T00:00:00")
-        last_update_request_received = Time.parse(peer[:last_update_request_received] || "2018-01-01T00:00:00")
-        time_finished = last_broadcast > last_update_request_received ? last_broadcast : last_update_request_received
-        time_elapsed =  time_finished - Time.parse(peer[:detection_started])
+        finish_times = []
+        finish_times << Time.parse(peer[:last_broadcast] || "2018-01-01T00:00:00")
+        finish_times << Time.parse(peer[:last_update_request_received] || "2018-01-01T00:00:00")
+        finish_times << Time.parse(peer[:detection_finished] || "2018-01-01T00:00:00")
+        time_elapsed =  finish_times.max - Time.parse(peer[:detection_started])
         detection_time[run][get_type(instance)] ||= 0
         detection_time[run][get_type(instance)] += time_elapsed
       end

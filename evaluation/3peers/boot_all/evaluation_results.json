@@ -29,29 +29,29 @@
     }
   },
   "average_time_elapsed": {
-    "avg": 1.7045,
-    "run1": 1.669,
-    "run2": 1.7253,
-    "run3": 1.7193
+    "avg": 1.8708,
+    "run1": 1.832,
+    "run2": 1.898,
+    "run3": 1.8823
   },
   "average_time_elapsed_per_type": {
     "avg": {
-      "insurance": 0.575,
+      "insurance": 1.0737,
       "government": 2.113,
       "bank": 2.4257
     },
     "run1": {
-      "insurance": 0.552,
+      "insurance": 1.041,
       "government": 2.01,
       "bank": 2.445
     },
     "run2": {
-      "insurance": 0.556,
+      "insurance": 1.074,
       "government": 2.369,
       "bank": 2.251
     },
     "run3": {
-      "insurance": 0.617,
+      "insurance": 1.106,
       "government": 1.96,
       "bank": 2.581
     }

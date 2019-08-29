@@ -7,10 +7,10 @@
     "run3": 0.748
   },
   "average_time_elapsed": {
-    "avg": 0.381,
-    "run1": 0.364,
-    "run2": 0.373,
-    "run3": 0.406
+    "avg": 0.729,
+    "run1": 0.71,
+    "run2": 0.729,
+    "run3": 0.748
   },
   "total_messages_sent": {
     "avg": 4.0,
